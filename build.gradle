@@ -6,7 +6,7 @@ version = 'v1.0.0'
 jar {
    manifest {
       attributes (
-         'Implementation-Title': 'jext - Java Extensions',
+         'Implementation-Title': 'JExt - Java Extensions',
          'Implementation-Version': version
       )
    }
