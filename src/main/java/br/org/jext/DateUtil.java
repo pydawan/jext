@@ -2,9 +2,12 @@ package br.org.jext;
 
 import static br.org.verify.Verify.isEmptyOrNull;
 import static br.org.verify.Verify.isNotEmpty;
+import static br.org.verify.Verify.isNotNullOrEmpty;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * <p>Classe de métodos utilitários para manipulação de data e hora.</p>
@@ -464,6 +467,66 @@ public final class DateUtil {
    
    public static String agora(String formato) {
       return now(formato);
+   }
+   
+   public static Date date(String value, String format, Locale locale) {
+      Date date = null;
+      if (isNotNullOrEmpty(value)) {
+         SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
+         formatter.applyPattern(format);
+         try {
+            date = formatter.parse(value);
+         } catch (ParseException e) {
+            e.printStackTrace();
+         }
+      }
+      return date;
+   }
+   
+   public static Date date(String value, String format) {
+      Date date = null;
+      if (isNotNullOrEmpty(value)) {
+         try {
+            formatador.applyPattern(format);
+            date = formatador.parse(value);
+         } catch (ParseException e) {
+            e.printStackTrace();
+         }
+      }
+      return date;
+   }
+   
+   public static Date date(String value) {
+      Date date = null;
+      if (isNotNullOrEmpty(value)) {
+         try {
+            formatador.applyPattern("dd/MM/yyyy");
+            date = formatador.parse(value);
+         } catch (ParseException e) {
+            e.printStackTrace();
+         }
+      }
+      return date;
+   }
+   
+   public static Date datetime(String value) {
+      return date(value, "dd/MM/yyyy HH:mm:ss");
+   }
+   
+   public static Date time(String value) {
+      return date(value, "HH:mm:ss");
+   }
+   
+   public static Date datetimeSql(String value) {
+      return date(value, "yyyy-MM-dd HH:mm:ss");
+   }
+   
+   public static Date dateSql(String value) {
+      return date(value, "yyyy-MM-dd");
+   }
+   
+   public static Date timeSql(String value) {
+      return time(value);
    }
    
 }
