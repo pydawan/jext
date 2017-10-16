@@ -701,11 +701,11 @@ public abstract class $ {
       return DateUtil.agora(formato);
    }
    
-   public static <T> java.util.List<Object> list() {
+   public static java.util.List<Object> list() {
       return new ArrayList<>();
    }
    
-   public static <T> java.util.List<Object> list(Object... objects) {
+   public static java.util.List<Object> list(Object... objects) {
       java.util.List<Object> list = new ArrayList<>();
       list.addAll(Arrays.asList(objects));
       return list;
