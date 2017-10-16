@@ -7,19 +7,13 @@ import br.org.verify.Verify;
 
 /**
  * @author thiago-amm
- * @version v1.0.0 08/09/2017
+ * @version v1.0.0 16/10/2017
  * @since v1.0.0
  */
-public class Map extends HashMap<Object, Object> {
-   
-   private static final long serialVersionUID = 1L;
+public final class Map<K, V> {
    
    public static final java.util.Map<Object, Object> NULL_MAP = null;
    public static final java.util.Map<Object, Object> EMPTY_MAP = new HashMap<>(0);
-   
-   public static Map map() {
-      return new Map();
-   }
    
    public static MapItem item(Object key, Object value) {
       if (Verify.notContainsEmptyOrNull(key, value)) {
@@ -39,81 +33,71 @@ public class Map extends HashMap<Object, Object> {
       }
    }
    
-   public static Map of(MapItem... items) {
-      Map map = new Map();
-      if (Verify.notContainsEmptyOrNull((Object[]) items)) {
-         for (MapItem item : items) {
-            map.put(item.getKey(), item.getValue());
-         }
-      }
-      return map;
+   public static <K, V> java.util.Map<K, V> of() {
+      return new HashMap<K, V>();
    }
    
-   public static Map map(MapItem... items) {
-      return of(items);
-   }
-   
-   public static boolean isNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNull(java.util.Map<K, V> map) {
       return Verify.isNull(map);
    }
    
-   public static boolean Null(java.util.Map<?, ?> map) {
+   public static <K, V> boolean Null(java.util.Map<K, V> map) {
       return Verify.Null(map);
    }
    
-   public static boolean isNotNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNotNull(java.util.Map<K, V> map) {
       return Verify.isNotNull(map);
    }
    
-   public static boolean notNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean notNull(java.util.Map<K, V> map) {
       return Verify.notNull(map);
    }
    
-   public static boolean isEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isEmpty(java.util.Map<K, V> map) {
       return Verify.isEmpty(map);
    }
    
-   public static boolean empty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean empty(java.util.Map<K, V> map) {
       return Verify.empty(map);
    }
    
-   public static boolean isNotEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNotEmpty(java.util.Map<K, V> map) {
       return Verify.isNotEmpty(map);
    }
    
-   public static boolean notEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean notEmpty(java.util.Map<K, V> map) {
       return Verify.notEmpty(map);
    }
    
-   public static boolean isNullOrEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNullOrEmpty(java.util.Map<K, V> map) {
       return Verify.isNullOrEmpty(map);
    }
    
-   public static boolean nullOrEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean nullOrEmpty(java.util.Map<K, V> map) {
       return Verify.nullOrEmpty(map);
    }
    
-   public static boolean isEmptyOrNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isEmptyOrNull(java.util.Map<K, V> map) {
       return Verify.isEmptyOrNull(map);
    }
    
-   public static boolean emptyOrNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean emptyOrNull(java.util.Map<K, V> map) {
       return Verify.emptyOrNull(map);
    }
    
-   public static boolean isNotNullOrEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNotNullOrEmpty(java.util.Map<K, V> map) {
       return Verify.isNotNullOrEmpty(map);
    }
    
-   public static boolean notNullOrEmpty(java.util.Map<?, ?> map) {
+   public static <K, V> boolean notNullOrEmpty(java.util.Map<K, V> map) {
       return Verify.notNullOrEmpty(map);
    }
    
-   public static boolean isNotEmptyOrNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean isNotEmptyOrNull(java.util.Map<K, V> map) {
       return Verify.isNotEmptyOrNull(map);
    }
    
-   public static boolean notEmptyOrNull(java.util.Map<?, ?> map) {
+   public static <K, V> boolean notEmptyOrNull(java.util.Map<K, V> map) {
       return Verify.notEmptyOrNull(map);
    }
    

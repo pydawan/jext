@@ -1,5 +1,7 @@
 package br.org.jext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -699,12 +701,14 @@ public abstract class $ {
       return DateUtil.agora(formato);
    }
    
-   public static List list() {
-      return List.list();
+   public static <T> java.util.List<Object> list() {
+      return new ArrayList<>();
    }
    
-   public static List list(Object... objects) {
-      return List.list(objects);
+   public static <T> java.util.List<Object> list(Object... objects) {
+      java.util.List<Object> list = new ArrayList<>();
+      list.addAll(Arrays.asList(objects));
+      return list;
    }
    
    public static boolean isNull(Object object) {
@@ -1011,8 +1015,8 @@ public abstract class $ {
       return mapItem(key, value);
    }
    
-   public static br.org.jext.Map map(MapItem... items) {
-      br.org.jext.Map map = new br.org.jext.Map();
+   public static java.util.Map<Object, Object> map(MapItem... items) {
+      java.util.Map<Object, Object> map = new java.util.HashMap<>();
       if (Verify.notContainsEmptyOrNull((Object[]) items)) {
          for (MapItem item : items) {
             map.put(item.getKey(), item.getValue());
@@ -1021,13 +1025,9 @@ public abstract class $ {
       return map;
    }
    
-   public static br.org.jext.Map of(MapItem... items) {
-      br.org.jext.Map map = map(items);
+   public static java.util.Map<Object, Object> of(MapItem... items) {
+      java.util.Map<Object, Object> map = map(items);
       return map;
-   }
-   
-   public static br.org.jext.Map mapOf(MapItem... items) {
-      return map(items);
    }
    
    public static Tuple tuple(Object... objects) {

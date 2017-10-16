@@ -105,7 +105,8 @@ public class Tupla {
       return obterMenorTamanho((java.util.List<?>[]) listas);
    }
    
-   public static Tupla obterTamanhos(final java.util.List<?>... listas) {
+   @SafeVarargs
+   public static Tupla obterTamanhos(final java.util.List<Object>... listas) {
       java.util.List<Integer> tamanhos = new ArrayList<>();
       if (Verifique.eNaoNulo((Object[]) listas)) {
          for (java.util.List<?> lista : listas) {
@@ -117,10 +118,6 @@ public class Tupla {
          }
       }
       return Tupla.de(tamanhos.toArray());
-   }
-   
-   public static Tupla obterTamanhos(final List... listas) {
-      return obterTamanhos((java.util.List<?>[]) listas);
    }
    
    @Override
