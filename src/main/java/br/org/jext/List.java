@@ -15,7 +15,7 @@ public class List extends ArrayList<Object> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.List<Object> NULL_LIST = null;
-   public static final java.util.List<Object> EMPTY_LIST = new ArrayList<>();
+   public static final java.util.List<Object> EMPTY_LIST = new ArrayList<>(0);
    
    public List append(Object... objects) {
       if (objects != null) {

@@ -15,7 +15,7 @@ public class Map extends HashMap<Object, Object> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.Map<Object, Object> NULL_MAP = null;
-   public static final java.util.Map<Object, Object> EMPTY_MAP = new HashMap<>();
+   public static final java.util.Map<Object, Object> EMPTY_MAP = new HashMap<>(0);
    
    public static Map map() {
       return new Map();

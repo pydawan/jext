@@ -15,7 +15,7 @@ public class Lista extends ArrayList<Object> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.List<Object> LISTA_NULA = null;
-   public static final java.util.List<Object> LISTA_VAZIA = new ArrayList<>();
+   public static final java.util.List<Object> LISTA_VAZIA = new ArrayList<>(0);
    
    public Lista adicionar(Object... objetos) {
       if (objetos != null) {
