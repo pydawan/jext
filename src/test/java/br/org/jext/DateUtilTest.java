@@ -12,6 +12,16 @@ public class DateUtilTest {
       System.out.println(DateUtil.datetimeSql("1982-11-19 16:55:25"));
       System.out.println(DateUtil.dateSql("1982-11-19"));
       System.out.println(DateUtil.timeSql("16:55:25"));
+      System.out.println("18/10/2017 11:11:36".matches(Regex.DATETIME_FORMAT.value()));
+      System.out.println("18/10/2017".matches(Regex.DATE_FORMAT.value()));
+      System.out.println("11:11:36".matches(Regex.TIME_FORMAT.value()));
+      System.out.println(DateUtil.toSqlFormat("18/10/2017 11:11:36.123456"));
+      System.out.println(DateUtil.toSqlFormat("18/10/2017 11:11:36"));
+      System.out.println(DateUtil.toSqlFormat("18/10/2017"));
+      System.out.println(DateUtil.toSqlFormat("11:11:36"));
+      System.out.println(DateUtil.toDateFormat("2017-10-18"));
+      System.out.println(DateUtil.toDateFormat("2017-10-18 12:57:30"));
+      System.out.println(DateUtil.dateSql("2017-10-18 12:57:30"));
    }
    
 }

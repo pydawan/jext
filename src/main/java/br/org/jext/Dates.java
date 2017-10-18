@@ -13,7 +13,7 @@ import java.util.Locale;
  * <p>Classe de métodos utilitários para manipulação de data e hora.</p>
  * 
  * @author thiago-amm
- * @version v1.0.0 14/10/2017
+ * @version v1.0.0 08/09/2017
  * @since v1.0.0
  * @see java.util.Date
  */
@@ -510,23 +510,165 @@ public final class Dates {
    }
    
    public static Date datetime(String value) {
-      return date(value, "dd/MM/yyyy HH:mm:ss");
+      Date datetime = null;
+      if (value.matches(Regex.DATETIME_FORMAT.value())) {
+         if (value.endsWith(".S")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.S");
+         } else if (value.endsWith(".SS")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.SS");
+         } else if (value.endsWith(".SSS")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.SSS");
+         } else if (value.endsWith(".SSSS")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.SSSS");
+         } else if (value.endsWith(".SSSSS")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.SSSSS");
+         } else if (value.endsWith(".SSSSSS")) {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss.SSSSSS");
+         } else {
+            datetime = date(value, "dd/MM/yyyy HH:mm:ss");
+         }
+      }
+      return datetime;
    }
    
    public static Date time(String value) {
-      return date(value, "HH:mm:ss");
+      Date time = null;
+      if (value.matches(Regex.SQL_TIME_FORMAT.value())) {
+         if (value.endsWith(".S")) {
+            time = date(value, "HH:mm:ss.S");
+         } else if (value.endsWith(".SS")) {
+            time = date(value, "HH:mm:ss.SS");
+         } else if (value.endsWith(".SSS")) {
+            time = date(value, "HH:mm:ss.SSS");
+         } else if (value.endsWith(".SSSS")) {
+            time = date(value, "HH:mm:ss.SSSS");
+         } else if (value.endsWith(".SSSSS")) {
+            time = date(value, "HH:mm:ss.SSSSS");
+         } else if (value.endsWith(".SSSSSS")) {
+            time = date(value, "HH:mm:ss.SSSSSS");
+         } else {
+            time = date(value, "HH:mm:ss");
+         }
+      }
+      return time;
+   }
+   
+   public static Date toDatetimeSql(String value) {
+      Date datetime = null;
+      if (value.matches(Regex.SQL_DATETIME_FORMAT.value())) {
+         if (value.endsWith(".S")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.S");
+         } else if (value.endsWith(".SS")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.SS");
+         } else if (value.endsWith(".SSS")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.SSS");
+         } else if (value.endsWith(".SSSS")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.SSSS");
+         } else if (value.endsWith(".SSSSS")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.SSSSS");
+         } else if (value.endsWith(".SSSSSS")) {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss.SSSSSS");
+         } else {
+            datetime = date(value, "yyyy-MM-dd HH:mm:ss");
+         }
+      }
+      return datetime;
    }
    
    public static Date datetimeSql(String value) {
-      return date(value, "yyyy-MM-dd HH:mm:ss");
+      return toDatetimeSql(value);
    }
    
-   public static Date dateSql(String value) {
+   public static Date toDateSql(String value) {
       return date(value, "yyyy-MM-dd");
    }
    
-   public static Date timeSql(String value) {
+   public static Date dateSql(String value) {
+      return toDateSql(value);
+   }
+   
+   public static Date toTimeSql(String value) {
       return time(value);
+   }
+   
+   public static Date timeSql(String value) {
+      return toTimeSql(value);
+   }
+   
+   public static String toSqlFormat(String dateFormat) {
+      String sqlFormat = "";
+      String datahora[] = null;
+      String data = null;
+      String dia = null;
+      String mes = null;
+      String ano = null;
+      String horas = null;
+      if (isNotNullOrEmpty(dateFormat)) {
+         if (dateFormat.matches(Regex.DATETIME_FORMAT.value())) {
+            datahora = dateFormat.split(" ");
+            data = datahora[0];
+            horas = datahora[1];
+            datahora = data.split("/");
+            dia = datahora[0];
+            mes = datahora[1];
+            ano = datahora[2];
+            data = String.format("%s-%s-%s", ano, mes, dia);
+            sqlFormat = String.format("%s %s", data, horas);
+         } else if (dateFormat.matches(Regex.DATE_FORMAT.value())) {
+            datahora = dateFormat.split("/");
+            dia = datahora[0];
+            mes = datahora[1];
+            ano = datahora[2];
+            sqlFormat = String.format("%s-%s-%s", ano, mes, dia);
+         } else if (dateFormat.matches(Regex.TIME_FORMAT.value())) {
+            sqlFormat = dateFormat;
+         } else {
+            throw new IllegalArgumentException("ATENÇÃO: formato de data SQL inválido!");
+         }
+      }
+      return sqlFormat;
+   }
+   
+   public static String sqlFormat(String dateFormat) {
+      return toSqlFormat(dateFormat);
+   }
+   
+   public static String toDateFormat(String sqlFormat) {
+      String dateFormat = null;
+      String[] datahora = null;
+      String data = null;
+      String horas = null;
+      String dia = null;
+      String mes = null;
+      String ano = null;
+      if (isNotNullOrEmpty(sqlFormat)) {
+         if (sqlFormat.matches(Regex.SQL_DATETIME_FORMAT.value())) {
+            datahora = sqlFormat.split(" ");
+            data = datahora[0];
+            horas = datahora[1];
+            datahora = data.split("-");
+            ano = datahora[0];
+            mes = datahora[1];
+            dia = datahora[2];
+            data = String.format("%s/%s/%s", dia, mes, ano);
+            dateFormat = String.format("%s %s", data, horas);
+         } else if (sqlFormat.matches(Regex.SQL_DATE_FORMAT.value())) {
+            datahora = sqlFormat.split("-");
+            ano = datahora[0];
+            mes = datahora[1];
+            dia = datahora[2];
+            dateFormat = String.format("%s/%s/%s", dia, mes, ano);
+         } else if (sqlFormat.matches(Regex.TIME_FORMAT.value())) {
+            dateFormat = sqlFormat;
+         } else {
+            throw new IllegalArgumentException("ATENÇÃO: formato de data inválido!");
+         }
+      }
+      return dateFormat;
+   }
+   
+   public static String dateFormat(String sqlFormat) {
+      return toDateFormat(sqlFormat);
    }
    
 }

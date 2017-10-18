@@ -464,4 +464,12 @@ public final class Strings {
       return mapString;
    }
    
+   public static String nullToEmpty(String value) {
+      return value == null ? "" : value;
+   }
+   
+   public static String emptyToNull(String value) {
+      return value != null && value.isEmpty() ? null : value;
+   }
+   
 }
