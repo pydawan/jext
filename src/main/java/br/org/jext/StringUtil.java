@@ -472,4 +472,8 @@ public final class StringUtil {
       return value != null && value.isEmpty() ? null : value;
    }
    
+   public static boolean notEmpty(String value) {
+      return value != null && !value.isEmpty() ? true : false; 
+   }
+   
 }
