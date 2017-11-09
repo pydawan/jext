@@ -85,14 +85,6 @@ public final class Dates {
       return getDataPorExtenso(date);
    }
    
-   public static String fullDate(Date date) {
-      return getFullDate(date);
-   }
-   
-   public static String fulldate(Date date) {
-      return fullDate(date);
-   }
-   
    public static String getDataAtualPorExtenso() {
       return getDataPorExtenso(new Date());
    }
@@ -176,6 +168,16 @@ public final class Dates {
    
    public static void verifyFormat(String format) {
       verificarFormato(format);
+   }
+   
+   public static void verificarLocalizacao(Locale locale) {
+      if (locale == null) {
+         throw new IllegalArgumentException("A localização não pode ser nula!");
+      }
+   }
+   
+   public static void verifyLocale(Locale locale) {
+      verificarLocalizacao(locale);
    }
    
    public static String getSqlDate(String data) {
@@ -674,32 +676,300 @@ public final class Dates {
    
    public static String datetime(Date date, int dateStyle, int timeStyle, Locale locale) {
       verifyDate(date);
+      verifyLocale(locale);
       DateFormat dateFormat = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
       return dateFormat.format(date);
    }
    
+   public static String datetime(Date date, Locale locale) {
+      return datetime(date, DateFormat.DEFAULT, DateFormat.DEFAULT, locale);
+   }
+   
+   public static String datetime(Date date) {
+      return datetime(date, Locale.getDefault());
+   }
+   
    public static String date(Date date, int style, Locale locale) {
       verifyDate(date);
+      verifyLocale(locale);
       DateFormat dateFormat = DateFormat.getDateInstance(style, locale);
       return dateFormat.format(date);
    }
    
+   public static String date(Date date, Locale locale) {
+      return date(date, DateFormat.DEFAULT, locale);
+   }
+   
+   public static String date(Date date) {
+      return date(date, Locale.getDefault());
+   }
+   
+   public static String shortDate(Date date, Locale locale) {
+      return date(date, DateFormat.SHORT, locale);
+   }
+   
+   public static String shortdate(Date date, Locale locale) {
+      return shortDate(date, locale);
+   }
+   
+   public static String shortDate(Date date) {
+      return shortDate(date, Locale.getDefault());
+   }
+   
+   public static String shortdate(Date date) {
+      return shortDate(date);
+   }
+   
+   public static String mediumDate(Date date, Locale locale) {
+      return date(date, DateFormat.MEDIUM, locale);
+   }
+   
+   public static String mediumdate(Date date, Locale locale) {
+      return mediumDate(date, locale);
+   }
+   
+   public static String mediumDate(Date date) {
+      return mediumDate(date, Locale.getDefault());
+   }
+   
+   public static String mediumdate(Date date) {
+      return mediumDate(date);
+   }
+   
+   public static String longDate(Date date, Locale locale) {
+      return date(date, DateFormat.LONG, locale);
+   }
+   
+   public static String longdate(Date date, Locale locale) {
+      return longDate(date, locale);
+   }
+   
+   public static String longDate(Date date) {
+      return longDate(date, Locale.getDefault());
+   }
+   
+   public static String longdate(Date date) {
+      return longDate(date);
+   }
+   
+   public static String fullDate(Date date, Locale locale) {
+      return date(date, DateFormat.FULL, locale);
+   }
+   
+   public static String fulldate(Date date, Locale locale) {
+      return fullDate(date, locale);
+   }
+   
+   public static String fullDate(Date date) {
+      return fullDate(date, Locale.getDefault());
+   }
+   
+   public static String fulldate(Date date) {
+      return fullDate(date);
+   }
+   
    public static String time(Date date, int style, Locale locale) {
       verifyDate(date);
+      verifyLocale(locale);
       DateFormat dateFormat = DateFormat.getTimeInstance(style, locale);
       return dateFormat.format(date);
    }
    
-   public static String datahora(Date data, int formatoData, int formatoHora) {
-      return datetime(data, formatoData, formatoHora, new Locale("pt", "BR"));
+   public static String time(Date date, Locale locale) {
+      return time(date, DateFormat.DEFAULT, locale);
    }
    
-   public static String data(Date data, int formato) {
-      return date(data, formato, new Locale("pt", "BR"));
+   public static String time(Date date) {
+      return time(date, Locale.getDefault());
    }
    
-   public static String hora(Date data, int formato) {
-      return time(data, formato, new Locale("pt", "BR"));
+   public static String shortTime(Date date, Locale locale) {
+      return time(date, DateFormat.SHORT, locale);
+   }
+   
+   public static String shorttime(Date date, Locale locale) {
+      return shortTime(date, locale);
+   }
+   
+   public static String shortTime(Date date) {
+      return shortTime(date, Locale.getDefault());
+   }
+   
+   public static String shorttime(Date date) {
+      return shortTime(date, Locale.getDefault());
+   }
+   
+   public static String datahora(Date data, int estiloData, int estiloHora, Locale localizacao) {
+      verificarData(data);
+      verificarLocalizacao(localizacao);
+      DateFormat formatoData = DateFormat.getDateTimeInstance(estiloData, estiloHora, localizacao);
+      return formatoData.format(data);
+   }
+   
+   public static String datahora(Date data, Locale localizacao) {
+      return datahora(data, DateFormat.DEFAULT, DateFormat.DEFAULT, localizacao);
+   }
+   
+   public static String datahora(Date data) {
+      return datahora(data, Locale.getDefault());
+   }
+   
+   public static String data(Date data, int estilo, Locale localizacao) {
+      verificarData(data);
+      verificarLocalizacao(localizacao);
+      DateFormat formatadoData = DateFormat.getDateInstance(estilo, localizacao);
+      return formatadoData.format(data);
+   }
+   
+   public static String data(Date data, Locale localizacao) {
+      return data(data, DateFormat.DEFAULT, localizacao);
+   }
+   
+   public static String data(Date data) {
+      return data(data, Locale.getDefault());
+   }
+   
+   public static String dataCurta(Date data, Locale localizacao) {
+      return data(data, DateFormat.SHORT, localizacao);
+   }
+   
+   public static String datacurta(Date data, Locale localalizacao) {
+      return dataCurta(data, localalizacao);
+   }
+   
+   public static String dataCurta(Date data) {
+      return dataCurta(data, Locale.getDefault());
+   }
+   
+   public static String datacurta(Date data) {
+      return dataCurta(data);
+   }
+   
+   public static String dataMedia(Date data, Locale localizacao) {
+      return data(data, DateFormat.MEDIUM, localizacao);
+   }
+   
+   public static String datamedia(Date data, Locale localizacao) {
+      return dataMedia(data, localizacao);
+   }
+   
+   public static String dataMedia(Date data) {
+      return dataMedia(data, Locale.getDefault());
+   }
+   
+   public static String datamedia(Date data) {
+      return dataMedia(data);
+   }
+   
+   public static String dataLonga(Date data, Locale localizacao) {
+      return data(data, DateFormat.LONG, localizacao);
+   }
+   
+   public static String datalonga(Date data, Locale locale) {
+      return dataLonga(data, locale);
+   }
+   
+   public static String dataLonga(Date data) {
+      return dataLonga(data, Locale.getDefault());
+   }
+   
+   public static String datalonga(Date data) {
+      return dataLonga(data);
+   }
+   
+   public static String dataCompleta(Date data, Locale localizacao) {
+      return data(data, DateFormat.FULL, localizacao);
+   }
+   
+   public static String datacompleta(Date data, Locale localizacao) {
+      return dataCompleta(data, localizacao);
+   }
+   
+   public static String dataCompleta(Date data) {
+      return dataCompleta(data, Locale.getDefault());
+   }
+   
+   public static String datacompleta(Date data) {
+      return dataCompleta(data);
+   }
+   
+   public static String hora(Date data, int estilo, Locale localizacao) {
+      verificarData(data);
+      verificarLocalizacao(localizacao);
+      DateFormat formatoData = DateFormat.getTimeInstance(estilo, localizacao);
+      return formatoData.format(data);
+   }
+   
+   public static String hora(Date data, Locale localizacao) {
+      return hora(data, DateFormat.DEFAULT, localizacao);
+   }
+   
+   public static String hora(Date data) {
+      return hora(data, Locale.getDefault());
+   }
+   
+   public static String horaCurta(Date data, Locale localizacao) {
+      return hora(data, DateFormat.SHORT, localizacao);
+   }
+   
+   public static String horacurta(Date data, Locale localizacao) {
+      return horaCurta(data, localizacao);
+   }
+   
+   public static String horaCurta(Date data) {
+      return horaCurta(data, Locale.getDefault());
+   }
+   
+   public static String horacurta(Date data) {
+      return horacurta(data, Locale.getDefault());
+   }
+   
+   public static String horaMedia(Date data, Locale localizacao) {
+      return hora(data, DateFormat.MEDIUM, localizacao);
+   }
+   
+   public static String horamedia(Date data, Locale localizacao) {
+      return horaMedia(data, localizacao);
+   }
+   
+   public static String horaMedia(Date data) {
+      return horaMedia(data, Locale.getDefault());
+   }
+   
+   public static String horamedia(Date data) {
+      return horaMedia(data);
+   }
+   
+   public static String horaLonga(Date data, Locale localizacao) {
+      return hora(data, DateFormat.LONG, localizacao);
+   }
+   
+   public static String horalonga(Date data, Locale localizacao) {
+      return horaLonga(data, localizacao);
+   }
+   
+   public static String horaLonga(Date data) {
+      return horaLonga(data, Locale.getDefault());
+   }
+   
+   public static String horalonga(Date data) {
+      return horaLonga(data);
+   }
+   
+   public static String horaCompleta(Date data, Locale localizacao) {
+      return hora(data, DateFormat.FULL, localizacao);
+   }
+   
+   public static String horacompleta(Date data, Locale localizacao) {
+      return horaCompleta(data, localizacao);
+   }
+   
+   public static String horaCompleta(Date data) {
+      return hora(data, Locale.getDefault());
+   }
+   
+   public static String horacompleta(Date data) {
+      return horaCompleta(data);
    }
    
 }
