@@ -4,6 +4,7 @@ import static br.org.verify.Verify.isEmptyOrNull;
 import static br.org.verify.Verify.isNotEmpty;
 import static br.org.verify.Verify.isNotNullOrEmpty;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -669,6 +670,36 @@ public final class DateUtil {
    
    public static String dateFormat(String sqlFormat) {
       return toDateFormat(sqlFormat);
+   }
+   
+   public static String dateToString(Date date, int dateStyle, Locale locale) {
+      verifyDate(date);
+      DateFormat df = DateFormat.getDateInstance(dateStyle, locale);
+      return df.format(date);
+   }
+   
+   public static String dateString(Date date, int dateStyle, Locale locale) {
+      return dateToString(date, dateStyle, locale);
+   }
+   
+   public static String defaultDateString(Date date, Locale locale) {
+      return dateToString(date, DateFormat.DEFAULT, locale);
+   }
+   
+   public static String shortDateString(Date date, Locale locale) {
+      return dateToString(date, DateFormat.SHORT, locale);
+   }
+   
+   public static String mediumDateString(Date date, Locale locale) {
+      return dateToString(date, DateFormat.MEDIUM, locale);
+   }
+   
+   public static String longDateString(Date date, Locale locale) {
+      return dateToString(date, DateFormat.LONG, locale);
+   }
+   
+   public static String fullDateString(Date date, Locale locale) {
+      return dateToString(date, DateFormat.FULL, locale);
    }
    
 }
