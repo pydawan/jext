@@ -4,6 +4,7 @@ import static br.org.verify.Verify.isEmptyOrNull;
 import static br.org.verify.Verify.isNotEmpty;
 import static br.org.verify.Verify.isNotNullOrEmpty;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -669,6 +670,36 @@ public final class Dates {
    
    public static String dateFormat(String sqlFormat) {
       return toDateFormat(sqlFormat);
+   }
+   
+   public static String datetime(Date date, int dateStyle, int timeStyle, Locale locale) {
+      verifyDate(date);
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
+      return dateFormat.format(date);
+   }
+   
+   public static String date(Date date, int style, Locale locale) {
+      verifyDate(date);
+      DateFormat dateFormat = DateFormat.getDateInstance(style, locale);
+      return dateFormat.format(date);
+   }
+   
+   public static String time(Date date, int style, Locale locale) {
+      verifyDate(date);
+      DateFormat dateFormat = DateFormat.getTimeInstance(style, locale);
+      return dateFormat.format(date);
+   }
+   
+   public static String datahora(Date data, int formatoData, int formatoHora) {
+      return datetime(data, formatoData, formatoHora, new Locale("pt", "BR"));
+   }
+   
+   public static String data(Date data, int formato) {
+      return date(data, formato, new Locale("pt", "BR"));
+   }
+   
+   public static String hora(Date data, int formato) {
+      return time(data, formato, new Locale("pt", "BR"));
    }
    
 }

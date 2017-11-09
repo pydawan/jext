@@ -672,34 +672,34 @@ public final class DateUtil {
       return toDateFormat(sqlFormat);
    }
    
-   public static String dateToString(Date date, int dateStyle, Locale locale) {
+   public static String datetime(Date date, int dateStyle, int timeStyle, Locale locale) {
       verifyDate(date);
-      DateFormat df = DateFormat.getDateInstance(dateStyle, locale);
-      return df.format(date);
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
+      return dateFormat.format(date);
    }
    
-   public static String dateString(Date date, int dateStyle, Locale locale) {
-      return dateToString(date, dateStyle, locale);
+   public static String date(Date date, int style, Locale locale) {
+      verifyDate(date);
+      DateFormat dateFormat = DateFormat.getDateInstance(style, locale);
+      return dateFormat.format(date);
    }
    
-   public static String defaultDateString(Date date, Locale locale) {
-      return dateToString(date, DateFormat.DEFAULT, locale);
+   public static String time(Date date, int style, Locale locale) {
+      verifyDate(date);
+      DateFormat dateFormat = DateFormat.getTimeInstance(style, locale);
+      return dateFormat.format(date);
    }
    
-   public static String shortDateString(Date date, Locale locale) {
-      return dateToString(date, DateFormat.SHORT, locale);
+   public static String datahora(Date data, int formatoData, int formatoHora) {
+      return datetime(data, formatoData, formatoHora, new Locale("pt", "BR"));
    }
    
-   public static String mediumDateString(Date date, Locale locale) {
-      return dateToString(date, DateFormat.MEDIUM, locale);
+   public static String data(Date data, int formato) {
+      return date(data, formato, new Locale("pt", "BR"));
    }
    
-   public static String longDateString(Date date, Locale locale) {
-      return dateToString(date, DateFormat.LONG, locale);
-   }
-   
-   public static String fullDateString(Date date, Locale locale) {
-      return dateToString(date, DateFormat.FULL, locale);
+   public static String hora(Date data, int formato) {
+      return time(data, formato, new Locale("pt", "BR"));
    }
    
 }
