@@ -476,4 +476,18 @@ public final class StringUtil {
       return value != null && !value.isEmpty() ? true : false; 
    }
    
+   public static String[] array(String value, int length) {
+      String[] array = null;
+      value = value == null ? "" : value;
+      length = length < 0 ? 0 : length;
+      if (value.isEmpty() == false && length > 0) {
+         array = new String[length];
+         for (int i = 0; i < length; i++) {
+            array[i] = value;
+         }
+         
+      }
+      return array;
+   }
+   
 }

@@ -1069,4 +1069,16 @@ public abstract class $ {
       return keyValue(k, v);
    }
    
+   public static Object[] array(Object... objects) {
+      return ArrayUtil.array(objects);
+   }
+   
+   public static Object[] array(Object o, int length) {
+      return ArrayUtil.array(o, length);
+   }
+   
+   public static String[] array(String value, int length) {
+      return StringUtil.array(value, length);
+   }
+   
 }
