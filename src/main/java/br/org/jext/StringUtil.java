@@ -179,7 +179,7 @@ public final class StringUtil {
         return isNotSpace(string);
      }
      
-     public static String swapcase(String string) {
+     public static String swapCase(String string) {
         if (isNotEmptyOrNull(string)) {
            char[] chars = string.toCharArray();
            String swap = "";
@@ -193,6 +193,10 @@ public final class StringUtil {
            return swap;
         }
         return "";
+     }
+     
+     public static String swapcase(String string) {
+         return swapCase(string);
      }
      
      public static String isPalindrome(String s1, String s2) {
@@ -315,6 +319,14 @@ public final class StringUtil {
         return "";
      }
      
+     public static String zerofill(String string, int width) {
+         return zeroFill(string, width);
+     }
+     
+     public static String zfill(String string, int width) {
+         return zeroFill(string, width);
+     }
+     
      public static String[] splitLines(String string) {
         String[] lines = {};
         if (isNotEmptyOrNull(string)) {
@@ -323,16 +335,32 @@ public final class StringUtil {
         return lines;
      }
      
+     public static String[] splitlines(String string) {
+         return splitLines(string);
+     }
+     
      public static String asciiLowerCase() {
         return "abcdefghijklmnopqrstuvwxyz";
+     }
+     
+     public static String asciilower() {
+         return asciiLowerCase();
      }
      
      public static String asciiUpperCase() {
         return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
      }
      
+     public static String asciiupper() {
+         return asciiUpperCase();
+     }
+     
      public static String asciiLetters() {
         return asciiLowerCase() + asciiUpperCase();
+     }
+     
+     public static String asciiletters() {
+         return asciiLetters();
      }
      
      public static String digits() {
@@ -343,8 +371,16 @@ public final class StringUtil {
         return "0123456789abcdefABCDEF";
      }
      
+     public static String hexadecimal() {
+         return hexadecimalDigits();
+     }
+     
      public static String octalDigits() {
         return "01234567";
+     }
+     
+     public static String octaldigits() {
+         return octalDigits();
      }
      
      public static String punctuation() {
@@ -357,6 +393,10 @@ public final class StringUtil {
      
      public static String whiteSpace() {
         return "\\t\\n\\x0b\\x0c\\r ";
+     }
+     
+     public static String whitespace() {
+         return whiteSpace();
      }
      
      public static boolean isPunctuation(Character c) {
@@ -397,6 +437,10 @@ public final class StringUtil {
      
      public static boolean whiteSpace(Character c) {
         return isWhiteSpace(c);
+     }
+     
+     public static boolean whitespace(Character c) {
+         return isWhiteSpace(c);
      }
      
      public static boolean isNotWhiteSpace(Character c) {
@@ -495,6 +539,24 @@ public final class StringUtil {
            mapString = String.format(mapString, items);
         }
         return mapString;
+     }
+     
+     public static String toString(Object object) {
+         String string = "";
+         if (isNotEmptyOrNull(object) && isArray(object)) {
+             string = arrayToString(object);
+         }
+         if (isNotEmptyOrNull(object) && isList(object)) {
+             string =  listToString(object);
+         }
+         if (isNotEmptyOrNull(object) && isMap(object)) {
+             string = mapToString(object);
+         }
+         return string;
+     }
+     
+     public static String string(Object object) {
+         return toString(object);
      }
      
      public static String nullToEmpty(String value) {
