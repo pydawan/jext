@@ -248,6 +248,14 @@ public final class StringUtil {
          return leftJustify(string, width);
      }
      
+     public static String padLeft(String string, int width, String fillchar) {
+         return leftJustify(string, width, fillchar);
+     }
+     
+     public static String padLeft(String string, int width) {
+         return leftJustify(string, width, " ");
+     }
+     
      public static String rightJustify(String string, int width, String fillchar) {
         if (isNotEmptyOrNull(string) && width > string.length() && isNotEmptyOrNull(fillchar)) {
            return times(fillchar, width - string.length()) + string;
@@ -264,6 +272,14 @@ public final class StringUtil {
      }
      
      public static String rjustify(String string, int width) {
+         return rightJustify(string, width);
+     }
+     
+     public static String padRight(String string, int width, String fillchar) {
+         return rightJustify(string, width, fillchar);
+     }
+     
+     public static String padRight(String string, int width) {
          return rightJustify(string, width);
      }
      
