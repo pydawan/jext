@@ -16,6 +16,7 @@ import java.util.Map.Entry;
  * 
  * @author thiago-amm
  * @version v1.0.0 14/10/2017
+ * @version v1.0.1 01/02/2018
  * @since v1.0.0
  */
 public final class Strings {
@@ -231,11 +232,35 @@ public final class Strings {
       return "";
    }
    
+   public static String leftJustify(String string, int width) {
+       return leftJustify(string, width, " ");
+   }
+   
+   public static String ljust(String string, int width, String fillchar) {
+       return leftJustify(string, width, fillchar);
+   }
+   
+   public static String ljust(String string, int width) {
+       return leftJustify(string, width);
+   }
+   
    public static String rightJustify(String string, int width, String fillchar) {
       if (isNotEmptyOrNull(string) && width > string.length() && isNotEmptyOrNull(fillchar)) {
          return times(fillchar, width - string.length()) + string;
       }
       return "";
+   }
+   
+   public static String rightJustify(String string, int width) {
+       return rightJustify(string, width, " ");
+   }
+   
+   public static String rjustify(String string, int width, String fillchar) {
+       return rightJustify(string, width, fillchar);
+   }
+   
+   public static String rjustify(String string, int width) {
+       return rightJustify(string, width);
    }
    
    public static String center(String string, int width, String fillchar) {
@@ -258,11 +283,19 @@ public final class Strings {
       return "";
    }
    
+   public static String lstrip(String string) {
+       return leftStrip(string);
+   }
+   
    public static String rightStrip(String string) {
       if (isNotEmptyOrNull(string)) {
          return string.replace("\\s+$", "");
       }
       return "";
+   }
+   
+   public static String rstrip(String string) {
+       return rightStrip(string);
    }
    
    public static String strip(String string) {
