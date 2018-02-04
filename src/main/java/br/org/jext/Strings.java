@@ -6,10 +6,14 @@ import static br.org.verify.Verify.isMap;
 import static br.org.verify.Verify.isNotEmptyOrNull;
 import static br.org.verify.Verify.isNotNull;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import br.org.verify.Verify;
 
 /**
  * <p>Classe de métodos utilitários para manipulação strings.</p>
@@ -19,7 +23,19 @@ import java.util.Map.Entry;
  * @version v1.0.1 01/02/2018
  * @since v1.0.0
  */
+/**
+ * @author thiago
+ *
+ */
+/**
+ * @author thiago
+ *
+ */
 public final class Strings {
+   
+   private static final List<String> EMPTY_LINES = new ArrayList<>(0);
+   
+   public static final String EMPTY_STRING = "";
    
    public static boolean isBlank(String string) {
       return isNotEmptyOrNull(string) && string.matches("\\s+");
@@ -63,6 +79,29 @@ public final class Strings {
       }
    }
    
+   public static boolean isCapitalized(String text) {
+      boolean capitalized = false;
+      text = text == null ? "" : text;
+      if (text.isEmpty()) {
+         capitalized = false;
+      } else {
+         capitalized = text.equals(capitalize(text));
+      }
+      return capitalized;
+   }
+   
+   public static boolean isNotCapitalized(String text) {
+      return !isCapitalized(text);
+   }
+   
+   public static boolean capitalized(String text) {
+      return isCapitalized(text);
+   }
+   
+   public static boolean notCapitalized(String text) {
+      return capitalized(text);
+   }
+   
    public static String reverse(String string) {
       if (isNotEmptyOrNull(string)) {
          return new StringBuilder(string).reverse().toString();
@@ -84,26 +123,34 @@ public final class Strings {
       return "";
    }
    
-   public static boolean isUpper(String string) {
+   public static boolean isUpperCase(String string) {
       if (isNotEmptyOrNull(string)) {
          return string.matches("^\\p{Lu}+$");
       }
       return false;
    }
    
-   public static boolean uppered(String string) {
-      return isUpper(string);
+   public static boolean isUpper(String string) {
+      return isUpperCase(string);
    }
    
-   public static boolean isLower(String string) {
+   public static boolean uppered(String string) {
+      return isUpperCase(string);
+   }
+   
+   public static boolean isLowerCase(String string) {
       if (isNotEmptyOrNull(string)) {
          return string.matches("^\\p{Ll}+$");
       }
       return false;
    }
    
+   public static boolean isLower(String string) {
+      return isLowerCase(string);
+   }
+   
    public static boolean lowered(String string) {
-      return isLower(string);
+      return isLowerCase(string);
    }
    
    public static boolean isDigit(String string) {
@@ -599,6 +646,303 @@ public final class Strings {
          
       }
       return array;
+   }
+   
+   public static boolean ignoreCase(boolean value) {
+      return value;
+   }
+   
+   public static String removeDiacritics(String text) {
+      text = text == null ? "" : text;
+      if (text.isEmpty() == false) {
+         text = Normalizer.normalize(text, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+      }
+      return text;
+   }
+   
+   /**
+    * Traduz o texto informado substituindo cada caractere do alfabeto de entrada
+    * por seu caractere equivalente em posição no alfabeto de saída.
+    * 
+    * @param text  texto a ser informado
+    * @param source  alfabeto de entrada
+    * @param target  alfabeto de saída
+    * @param ignoreCase  ignora ou não o fato do caractere ser minúsculo ou maiúsculo
+    * @return texto traduzido
+    */
+   public static String translate(String text, String source, String target) {
+      String translation = EMPTY_STRING;
+      text = text == null ? "" : text;
+      source = source == null ? "" : source;
+      target = target == null ? "" : target;
+      if (!text.isEmpty() && !source.isEmpty() && !target.isEmpty()) {
+         if (source.length() == target.length()) {
+            translation = text;
+            for (int i = 0; i < source.length(); i++) {
+               translation = translation.replaceAll(
+                  String.valueOf(source.charAt(i)).toLowerCase(), 
+                  String.valueOf(target.charAt(i)).toLowerCase()
+               );
+               translation = translation.replaceAll(
+                  String.valueOf(source.charAt(i)).toUpperCase(), 
+                  String.valueOf(target.charAt(i)).toUpperCase()
+               );
+            }
+         }
+      }
+      return translation;
+   }
+   
+   public static String translate(String text, List<String> source, List<String> target) {
+      String translation = EMPTY_STRING;
+      if (Verify.notContainsNullOrEmpty(text, source, target)) {
+         if (source.size() == target.size()) {
+            translation = text;
+            String sourceWord = null;
+            String targetWord = null;
+            for (int i = 0; i < source.size(); i++) {
+               sourceWord = source.get(i);
+               targetWord = target.get(i);
+               translation = translation.replace(sourceWord.toLowerCase(), targetWord.toLowerCase());
+               translation = translation.replace(sourceWord.toUpperCase(), targetWord.toUpperCase());
+               translation = translation.replace(Strings.capitalize(sourceWord), Strings.capitalize(targetWord));
+               translation = translation.replace(sourceWord, targetWord);
+            }
+         }
+      }
+      return translation;
+   }
+   
+   public static List<String> getLines(String text, String delimiter) {
+      List<String> lines = EMPTY_LINES;
+      text = text == null ? "" : text;
+      if (!text.isEmpty()) {
+         lines = java.util.Arrays.asList(text.split(delimiter));
+      }
+      return lines;
+   }
+   
+   public static List<String> getLines(String text) {
+      return getLines(text, "\n");
+   }
+   
+   public static List<String> lines(String text, String delimiter) {
+      return getLines(text, delimiter);
+   }
+   
+   public static List<String> lines(String text) {
+      return getLines(text);
+   }
+   
+   public static int count(String word, String text, String delimiter, boolean ignoreCase) {
+      int amount = 0;
+      List<String> lines = getLines(text, delimiter);
+      for (String line : lines) {
+         if (ignoreCase == true) {
+            if (line.equalsIgnoreCase(word)) {
+               amount++;
+            }
+         } else {
+            if (line.equals(word)) {
+               amount++;
+            }
+         }
+      }
+      return amount;
+   }
+   
+   public static int count(String word, String text, String delimiter) {
+      return count(text, word, delimiter, false);
+   }
+   
+   public static int count(String word, String text, boolean ignoreCase) {
+      return count(text, word, " ", ignoreCase);
+   }
+   
+   public static int count(String word, String text) {
+      return count(text, word, false);
+   }
+   
+   public static String expandTabs(String text, int amount, String replace) {
+      String result = text == null ? "" : text;
+      replace = replace == null ? " " : replace;
+      if (amount > 0) {
+         result = result.replace("\t", Strings.repeat(replace, amount));
+      }
+      return result;
+   }
+   
+   public static String expandTabs(String text, int amount) {
+      return expandTabs(text, amount, " ");
+   }
+   
+   public static String join(List<String> lines, String delimiter) {
+      String result = "";
+      delimiter = delimiter == null ? " " : delimiter;
+      if (lines.isEmpty() == false) {
+         StringBuilder sb = new StringBuilder();
+         for (int i = 0; i < lines.size() - 1; i++) {
+            sb.append(lines.get(i) + delimiter + lines.get(i + 1));
+         }
+         result = sb.toString();
+      }
+      return result;
+   }
+   
+   public static String join(String delimiter, String... lines) {
+      String result = "";
+      delimiter = delimiter == null ? " " : delimiter;
+      if (lines.length > 0) {
+         StringBuilder sb = new StringBuilder();
+         for (int i = 0; i < lines.length - 1; i++) {
+            sb.append(lines[i] + delimiter + lines[i + 1]);
+         }
+         result = sb.toString();
+      }
+      return result;
+   }
+   
+   /**
+    * Retorna uma cópia do texto onde cada primeiro caractere de cada palavra é tornado maiúsculo.
+    * @param text  texto informado
+    * @return texto contendo cada palavra com letra maiúscula
+    */
+   public static String title(String text) {
+      String title = "";
+      if (Verify.notNullOrEmpty(text)) {
+         String[] words = text.split(" ");
+         for (String word : words) {
+            title += Strings.capitalize(word) + " ";
+         }
+         title = title.trim();
+      }
+      return title;
+   }
+   
+   public static boolean isTitle(String text) {
+      boolean isTitle = false;
+      if (Verify.notNullOrEmpty(text)) {
+         isTitle = Strings.title(text).equals(text);
+      }
+      return isTitle;
+   }
+   
+   public static int find(String value, String text, int begin, int end) throws IllegalArgumentException {
+      int index = -1;
+      String _value = value == null ? "" : value;
+      String _text = text == null ? "" : text;
+      if (!_value.isEmpty() && !_text.isEmpty()) {
+         if (begin < 0) {
+            throw new IllegalArgumentException("begin não pode ser menor que zero!");
+         } else if (end < 0) {
+            throw new IllegalArgumentException("end não pode ser menor que zero!");
+         } else if (begin > text.length()) {
+            throw new IllegalArgumentException("begin não pode ser maior que o comprimento de text!");
+         } else if (end > text.length()) {
+            throw new IllegalArgumentException("end não pode ser maior que o comprimento de text!");
+         } else {
+            index = text.substring(begin, end).indexOf(value);
+         }
+      }
+      return index;
+   }
+   
+   public static int rfind(String value, String text, int begin, int end) throws IllegalArgumentException {
+      int index = -1;
+      String _value = value == null ? "" : value;
+      String _text = text == null ? "" : text;
+      if (!_value.isEmpty() && !_text.isEmpty()) {
+         if (begin < 0) {
+            throw new IllegalArgumentException("begin não pode ser menor que zero!");
+         } else if (end < 0) {
+            throw new IllegalArgumentException("end não pode ser menor que zero!");
+         } else if (begin > text.length()) {
+            throw new IllegalArgumentException("begin não pode ser maior que o comprimento de text!");
+         } else if (end > text.length()) {
+            throw new IllegalArgumentException("end não pode ser maior que o comprimento de text!");
+         } else {
+            index = text.substring(begin, end).lastIndexOf(value);
+         }
+      }
+      return index;
+   }
+   
+   public static int index(String value, String text, int begin, int end) throws Exception {
+      int index = -1;
+      String _value = value == null ? "" : value;
+      String _text = text == null ? "" : text;
+      if (!_value.isEmpty() && !_text.isEmpty()) {
+         if (begin < 0) {
+            throw new IllegalArgumentException("begin não pode ser menor que zero!");
+         } else if (end < 0) {
+            throw new IllegalArgumentException("end não pode ser menor que zero!");
+         } else if (begin > text.length()) {
+            throw new IllegalArgumentException("begin não pode ser maior que o comprimento de text!");
+         } else if (end > text.length()) {
+            throw new IllegalArgumentException("end não pode ser maior que o comprimento de text!");
+         } else {
+            index = text.substring(begin, end).indexOf(value);
+         }
+      }
+      if (index < 0) {
+         throw new Exception("texto não encontrado!");
+      }
+      return index;
+   }
+   
+   public static int rindex(String value, String text, int begin, int end) throws Exception {
+      int index = -1;
+      String _value = value == null ? "" : value;
+      String _text = text == null ? "" : text;
+      if (!_value.isEmpty() && !_text.isEmpty()) {
+         if (begin < 0) {
+            throw new IllegalArgumentException("begin não pode ser menor que zero!");
+         } else if (end < 0) {
+            throw new IllegalArgumentException("end não pode ser menor que zero!");
+         } else if (begin > text.length()) {
+            throw new IllegalArgumentException("begin não pode ser maior que o comprimento de text!");
+         } else if (end > text.length()) {
+            throw new IllegalArgumentException("end não pode ser maior que o comprimento de text!");
+         } else {
+            index = text.substring(begin, end).lastIndexOf(value);
+         }
+      }
+      if (index < 0) {
+         throw new Exception("texto não encontrado!");
+      }
+      return index;
+   }
+   
+   public static int len(String text) {
+      return text.length();
+   }
+   
+   public static String min(String text) {
+      String result = "";
+      if (Verify.notNullOrEmpty(text)) {
+         char min = text.charAt(0);
+         for (int i = 1; i < text.length(); i++) {
+            if (text.charAt(i) < min) {
+               min = text.charAt(i);
+            }
+         }
+         result = String.valueOf(min);
+      }
+      return result;
+   }
+   
+   public static String max(String text) {
+      String result = "";
+      if (Verify.notNullOrEmpty(text)) {
+         char max = text.charAt(0);
+         for (int i = 1; i < text.length(); i++) {
+            if (max < text.charAt(i)) {
+               max = text.charAt(i);
+            }
+         }
+         result = String.valueOf(max);
+      }
+      return result;
    }
    
 }
