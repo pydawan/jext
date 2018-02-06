@@ -102,6 +102,25 @@ public final class Strings {
       return capitalized(text);
    }
    
+   public static String unCapitalize(String word) {
+      String result = "";
+      if (Strings.isCapitalized(word)) {
+         result = word.substring(0, 1).toLowerCase() + word.substring(1);
+      }
+      return result;
+   }
+   
+   public static String[] unCapitalize(String... strings) {
+      String result[] = null;
+      if (isNotEmptyOrNull((Object[]) strings)) {
+         result = new String[strings.length];
+         for (int i = 0; i < strings.length; i++) {
+            result[i] = strings[i].substring(0, 1).toLowerCase() + strings[i].substring(1);
+         }
+      }
+      return result;
+   }
+   
    public static String reverse(String string) {
       if (isNotEmptyOrNull(string)) {
          return new StringBuilder(string).reverse().toString();
