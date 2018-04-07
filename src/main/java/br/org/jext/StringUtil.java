@@ -4,7 +4,6 @@ import static br.org.verify.Verify.isArray;
 import static br.org.verify.Verify.isList;
 import static br.org.verify.Verify.isMap;
 import static br.org.verify.Verify.isNotEmptyOrNull;
-import static br.org.verify.Verify.isNotNull;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
@@ -23,11 +22,12 @@ import br.org.verify.Verify;
  * @author thiago-amm
  * @version v1.0.0 01/09/2017
  * @version v1.0.1 01/02/2018
+ * @version v1.0.2 07/04/2018
  * @since v1.0.0
  */
 public final class StringUtil {
    
-   private static final List<String> EMPTY_LINES = new ArrayList<>(0);
+   private static final List<String> EMPTY_STRINGS_LIST = new ArrayList<>(0);
    
    public static final String EMPTY_STRING = "";
    
@@ -256,7 +256,7 @@ public final class StringUtil {
    }
    
    public static String swapcase(String string) {
-       return swapCase(string);
+      return swapCase(string);
    }
    
    public static String isPalindrome(String s1, String s2) {
@@ -297,23 +297,23 @@ public final class StringUtil {
    }
    
    public static String leftJustify(String string, int width) {
-       return leftJustify(string, width, " ");
+      return leftJustify(string, width, " ");
    }
    
    public static String ljust(String string, int width, String fillchar) {
-       return leftJustify(string, width, fillchar);
+      return leftJustify(string, width, fillchar);
    }
    
    public static String ljust(String string, int width) {
-       return leftJustify(string, width);
+      return leftJustify(string, width);
    }
    
    public static String padLeft(String string, int width, String fillchar) {
-       return leftJustify(string, width, fillchar);
+      return leftJustify(string, width, fillchar);
    }
    
    public static String padLeft(String string, int width) {
-       return leftJustify(string, width, " ");
+      return leftJustify(string, width, " ");
    }
    
    public static String rightJustify(String string, int width, String fillchar) {
@@ -324,23 +324,23 @@ public final class StringUtil {
    }
    
    public static String rightJustify(String string, int width) {
-       return rightJustify(string, width, " ");
+      return rightJustify(string, width, " ");
    }
    
    public static String rjustify(String string, int width, String fillchar) {
-       return rightJustify(string, width, fillchar);
+      return rightJustify(string, width, fillchar);
    }
    
    public static String rjustify(String string, int width) {
-       return rightJustify(string, width);
+      return rightJustify(string, width);
    }
    
    public static String padRight(String string, int width, String fillchar) {
-       return rightJustify(string, width, fillchar);
+      return rightJustify(string, width, fillchar);
    }
    
    public static String padRight(String string, int width) {
-       return rightJustify(string, width);
+      return rightJustify(string, width);
    }
    
    public static String center(String string, int width, String fillchar) {
@@ -364,7 +364,7 @@ public final class StringUtil {
    }
    
    public static String lstrip(String string) {
-       return leftStrip(string);
+      return leftStrip(string);
    }
    
    public static String rightStrip(String string) {
@@ -375,7 +375,7 @@ public final class StringUtil {
    }
    
    public static String rstrip(String string) {
-       return rightStrip(string);
+      return rightStrip(string);
    }
    
    public static String strip(String string) {
@@ -396,11 +396,11 @@ public final class StringUtil {
    }
    
    public static String zerofill(String string, int width) {
-       return zeroFill(string, width);
+      return zeroFill(string, width);
    }
    
    public static String zfill(String string, int width) {
-       return zeroFill(string, width);
+      return zeroFill(string, width);
    }
    
    public static String[] splitLines(String string) {
@@ -412,7 +412,7 @@ public final class StringUtil {
    }
    
    public static String[] splitlines(String string) {
-       return splitLines(string);
+      return splitLines(string);
    }
    
    public static String asciiLowerCase() {
@@ -420,7 +420,7 @@ public final class StringUtil {
    }
    
    public static String asciilower() {
-       return asciiLowerCase();
+      return asciiLowerCase();
    }
    
    public static String asciiUpperCase() {
@@ -428,7 +428,7 @@ public final class StringUtil {
    }
    
    public static String asciiupper() {
-       return asciiUpperCase();
+      return asciiUpperCase();
    }
    
    public static String asciiLetters() {
@@ -436,7 +436,7 @@ public final class StringUtil {
    }
    
    public static String asciiletters() {
-       return asciiLetters();
+      return asciiLetters();
    }
    
    public static String digits() {
@@ -448,7 +448,7 @@ public final class StringUtil {
    }
    
    public static String hexadecimal() {
-       return hexadecimalDigits();
+      return hexadecimalDigits();
    }
    
    public static String octalDigits() {
@@ -456,7 +456,7 @@ public final class StringUtil {
    }
    
    public static String octaldigits() {
-       return octalDigits();
+      return octalDigits();
    }
    
    public static String punctuation() {
@@ -472,7 +472,7 @@ public final class StringUtil {
    }
    
    public static String whitespace() {
-       return whiteSpace();
+      return whiteSpace();
    }
    
    public static boolean isPunctuation(Character c) {
@@ -516,7 +516,7 @@ public final class StringUtil {
    }
    
    public static boolean whitespace(Character c) {
-       return isWhiteSpace(c);
+      return isWhiteSpace(c);
    }
    
    public static boolean isNotWhiteSpace(Character c) {
@@ -609,7 +609,7 @@ public final class StringUtil {
          mapString = "{%s}";
          String items = "";
          for (Entry<Object, Object> entry : map.entrySet()) {
-            items += String.format("%s: %s, ", entry.getKey(), entry.getValue()); 
+            items += String.format("%s: %s, ", entry.getKey(), entry.getValue());
          }
          items = items.endsWith(", ") ? items.substring(0, items.lastIndexOf(", ")) : items;
          mapString = String.format(mapString, items);
@@ -618,21 +618,21 @@ public final class StringUtil {
    }
    
    public static String toString(Object object) {
-       String string = "";
-       if (isNotEmptyOrNull(object) && isArray(object)) {
-           string = arrayToString(object);
-       }
-       if (isNotEmptyOrNull(object) && isList(object)) {
-           string =  listToString(object);
-       }
-       if (isNotEmptyOrNull(object) && isMap(object)) {
-           string = mapToString(object);
-       }
-       return string;
+      String string = "";
+      if (isNotEmptyOrNull(object) && isArray(object)) {
+         string = arrayToString(object);
+      }
+      if (isNotEmptyOrNull(object) && isList(object)) {
+         string = listToString(object);
+      }
+      if (isNotEmptyOrNull(object) && isMap(object)) {
+         string = mapToString(object);
+      }
+      return string;
    }
    
    public static String string(Object object) {
-       return toString(object);
+      return toString(object);
    }
    
    public static String nullToEmpty(String value) {
@@ -644,7 +644,7 @@ public final class StringUtil {
    }
    
    public static boolean notEmpty(String value) {
-      return value != null && !value.isEmpty() ? true : false; 
+      return value != null && !value.isEmpty() ? true : false;
    }
    
    public static String[] array(String value, int length) {
@@ -677,10 +677,14 @@ public final class StringUtil {
     * Traduz o texto informado substituindo cada caractere do alfabeto de entrada
     * por seu caractere equivalente em posição no alfabeto de saída.
     * 
-    * @param text  texto a ser informado
-    * @param source  alfabeto de entrada
-    * @param target  alfabeto de saída
-    * @param ignoreCase  ignora ou não o fato do caractere ser minúsculo ou maiúsculo
+    * @param text
+    *           texto a ser informado
+    * @param source
+    *           alfabeto de entrada
+    * @param target
+    *           alfabeto de saída
+    * @param ignoreCase
+    *           ignora ou não o fato do caractere ser minúsculo ou maiúsculo
     * @return texto traduzido
     */
    public static String translate(String text, String source, String target) {
@@ -693,13 +697,11 @@ public final class StringUtil {
             translation = text;
             for (int i = 0; i < source.length(); i++) {
                translation = translation.replaceAll(
-                  String.valueOf(source.charAt(i)).toLowerCase(), 
-                  String.valueOf(target.charAt(i)).toLowerCase()
-               );
+                     String.valueOf(source.charAt(i)).toLowerCase(),
+                     String.valueOf(target.charAt(i)).toLowerCase());
                translation = translation.replaceAll(
-                  String.valueOf(source.charAt(i)).toUpperCase(), 
-                  String.valueOf(target.charAt(i)).toUpperCase()
-               );
+                     String.valueOf(source.charAt(i)).toUpperCase(),
+                     String.valueOf(target.charAt(i)).toUpperCase());
             }
          }
       }
@@ -727,7 +729,7 @@ public final class StringUtil {
    }
    
    public static List<String> getLines(String text, String delimiter) {
-      List<String> lines = EMPTY_LINES;
+      List<String> lines = EMPTY_STRINGS_LIST;
       text = text == null ? "" : text;
       if (!text.isEmpty()) {
          lines = java.util.Arrays.asList(text.split(delimiter));
@@ -816,8 +818,11 @@ public final class StringUtil {
    }
    
    /**
-    * Retorna uma cópia do texto onde cada primeiro caractere de cada palavra é tornado maiúsculo.
-    * @param text  texto informado
+    * Retorna uma cópia do texto onde cada primeiro caractere de cada palavra é
+    * tornado maiúsculo.
+    * 
+    * @param text
+    *           texto informado
     * @return texto contendo cada palavra com letra maiúscula
     */
    public static String title(String text) {
@@ -956,6 +961,79 @@ public final class StringUtil {
          result = String.valueOf(max);
       }
       return result;
+   }
+   
+   public static boolean isNull(String string) {
+      return string == null;
+   }
+   
+   public static boolean isNotNull(String string) {
+      return !isNull(string);
+   }
+   
+   public static boolean isNullOrEmpty(String string) {
+      return isNull(string) || string.isEmpty();
+   }
+   
+   public static boolean isNotNullOrEmpty(String string) {
+      return !isNullOrEmpty(string);
+   }
+   
+   public static boolean containsNull(String... strings) {
+      boolean isNull = false;
+      if (strings != null && strings.length > 0) {
+         for (String string : strings) {
+            if (isNull(string)) {
+               isNull = true;
+               break;
+            }
+         }
+      }
+      return isNull;
+   }
+   
+   public static boolean notContainsNull(String... strings) {
+      return !containsNull(strings);
+   }
+   
+   public static boolean containsNullOrEmpty(String... strings) {
+      boolean isNullOrEmpty = false;
+      if (strings != null && strings.length > 0) {
+         for (String string : strings) {
+            if (isNullOrEmpty(string)) {
+               isNullOrEmpty = true;
+               break;
+            }
+         }
+      }
+      return isNullOrEmpty;
+   }
+   
+   public static boolean notContainsNullOrEmpty(String... strings) {
+      return !containsNullOrEmpty(strings);
+   }
+   
+   public static Integer[] parseInt(String... strings) {
+      Integer[] integers = null;
+      if (notContainsNullOrEmpty(strings)) {
+         integers = ArrayUtil.parseInt(strings);
+      }
+      return integers;
+   }
+   
+   public static Integer[] parseIntArray(String string, String delimiter) {
+      Integer[] integers = null;
+      String regex = String.format("\\d+(%s\\d+)*", delimiter);
+      if (isNotNullOrEmpty(string) && string.matches(regex)) {
+         String[] strings = string.split(delimiter);
+         integers = ArrayUtil.parseInt(strings);
+      }
+      return integers;
+   }
+   
+   public static Integer[] parseInt(String string) {
+      Integer[] integers = parseIntArray(string, ",");
+      return integers;
    }
    
 }
