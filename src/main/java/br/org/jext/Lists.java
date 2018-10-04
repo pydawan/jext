@@ -27,6 +27,15 @@ public final class Lists<T> {
       return new ArrayList<T>(); 
    }
    
+   @SafeVarargs
+   public static <T> List<T> list(T... o) {
+       return Lists.of(o);
+   }
+   
+   public static <T> List<T> list() {
+       return Lists.of();
+   }
+   
    public static <T> boolean isNull(List<?> list) {
       return Verify.isNull(list);
    }
