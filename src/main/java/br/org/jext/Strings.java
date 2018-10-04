@@ -1036,4 +1036,13 @@ public final class Strings {
       return integers;
    }
    
+   public static String getOrDefault(Object value, String defaultValue) {
+       String _value = value == null ? defaultValue : value.toString();
+       return _value;
+   }
+   
+   public static String getOrEmpty(Object value) {
+       return Strings.getOrDefault(value, "");
+   }
+   
 }

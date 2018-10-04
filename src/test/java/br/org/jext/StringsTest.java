@@ -23,6 +23,8 @@ public class StringsTest {
       System.out.println(Strings.find("xand", "Thiago Alexandre Martins Monteiro", 5, 20));
       System.out.println(Strings.min("Meu nome é Lorenzo!"));
       System.out.println(Strings.max("Meu nome é Lorenzo!"));
+      System.out.println(Strings.getOrDefault(null, "vazio"));
+      System.out.println(Strings.getOrEmpty(null));
    }
    
 }
