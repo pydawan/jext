@@ -120,6 +120,14 @@ public class Tupla {
       return Tupla.de(tamanhos.toArray());
    }
    
+   public static Tupla tupla(Object... elementos) {
+       return Tupla.de(elementos);
+   }
+   
+   public Object[] toArray() {
+       return this.elementos.toArray(); 
+   }
+   
    @Override
    public String toString() {
       return elementos.toString();

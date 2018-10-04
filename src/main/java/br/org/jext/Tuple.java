@@ -89,6 +89,10 @@ public class Tuple {
       return Tuple.of(sizes.toArray());
    }
    
+   public static Tuple tuple(final Object...elements) {
+       return Tuple.of(elements);
+   }
+   
    public Object[] toArray() {
       return this.elements.toArray(); 
    }
