@@ -33,6 +33,18 @@ public class Enums {
       return getRandom(clazz);
    }
    
+   public static Object randomize(Class<?> clazz) {
+       Object value = null;
+       if (clazz != null && clazz.isEnum()) {
+          Random random = new Random();
+          Object[] values = clazz.getEnumConstants();
+          value = values[random.nextInt(values.length)];
+       } else {
+          throw new IllegalArgumentException("ATENÇÃO: A classe passada como parâmetro não é um Enum!");
+       }
+       return value;
+    }
+   
    public static java.util.List<?> asList(Class<?> clazz) {
       if (clazz != null && clazz.isEnum()) {
          return Arrays.asList(clazz.getEnumConstants());
