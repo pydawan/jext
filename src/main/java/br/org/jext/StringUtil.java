@@ -1036,13 +1036,64 @@ public final class StringUtil {
       return integers;
    }
    
-   public static String getOrDefault(Object value, String defaultValue) {
-       String _value = value == null ? defaultValue : value.toString();
-       return _value;
-   }
-   
-   public static String getOrEmpty(Object value) {
-       return StringUtil.getOrDefault(value, "");
-   }
+    public static String getOrDefault(final String string, final String defaultString) {
+        String _defaultString = defaultString == null ? "" : defaultString;
+        if (string == null) {
+            return _defaultString;
+        }
+        return string;
+    }
+    
+    public static String getOrDefault(final String string) {
+        return getOrDefault(string, null);
+    }
+    
+    public static String getOrEmpty(final String string) {
+        return getOrDefault(null);
+    }
+    
+    public static <T extends Throwable> String getOrThrow(final String string, final Class<? extends T> throwableClass, final String message) throws T {
+        if (string == null) {
+            try {
+                if (message == null) {
+                    throw throwableClass.newInstance();
+                } else {
+                    throw throwableClass.getConstructor(String.class).newInstance(message);
+                }
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+        return string;
+    }
+    
+    public static <T extends Throwable> String getOrThrow(final String string, final Class<? extends T> throwableClass) throws T {
+        if (string == null) {
+            try {
+                throw throwableClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return string;
+    }
+    
+    public static <T extends Throwable> void throwIf(final Class<? extends T> throwableClass, final String message, boolean condition) throws T {
+        if (condition == true) {
+            try {
+                if (message != null) {
+                    throw throwableClass.getConstructor(String.class).newInstance(message);
+                } else {
+                    throw throwableClass.newInstance();
+                }
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public static <T extends Throwable> void throwIf(final Class<? extends T> throwableClass, boolean condition) throws T {
+        StringUtils.throwIf(throwableClass, null, condition);
+    }
    
 }
