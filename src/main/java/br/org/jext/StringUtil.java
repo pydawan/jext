@@ -1095,5 +1095,12 @@ public final class StringUtil {
     public static <T extends Throwable> void throwIf(final Class<? extends T> throwableClass, boolean condition) throws T {
         StringUtils.throwIf(throwableClass, null, condition);
     }
+
+   public static <T> T getIfOrElse(boolean test, T t1, T t2) {
+      if (test == true) {
+         return t1;
+      }
+      return t2;
+   }
    
 }
