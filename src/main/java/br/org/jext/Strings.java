@@ -5,9 +5,11 @@ import static br.org.verify.Verify.isList;
 import static br.org.verify.Verify.isMap;
 import static br.org.verify.Verify.isNotEmptyOrNull;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1092,15 +1094,31 @@ public final class Strings {
         }
     }
     
-   public static <T extends Throwable> void throwIf(final Class<? extends T> throwableClass, boolean condition) throws T {
-      StringUtils.throwIf(throwableClass, null, condition);
-   }
+    public static <T extends Throwable> void throwIf(final Class<? extends T> throwableClass, boolean condition) throws T {
+        Strings.throwIf(throwableClass, null, condition);
+    }
 
-   public static <T> T getIfOrElse(boolean test, T t1, T t2) {
-      if (test == true) {
-         return t1;
-      }
-      return t2;
-   }
+    public static <T> T getIfOrElse(boolean test, T t1, T t2) {
+        if (test == true) {
+            return t1;
+        }
+        return t2;
+    }
+   
+    public static String compile(String template, HashMap<String, Object> context) throws IllegalArgumentException {
+        return Template.of().compile(template, context);
+    }
+   
+    public static String compile(String template) throws IllegalArgumentException {
+        return Template.of().compile(template);
+    }
+   
+    public static String compile() throws IllegalArgumentException {
+        return Template.of().compile();
+    }
     
+    public static String compile(Template template) throws IllegalArgumentException {
+        return template.compile();
+    }
+   
 }

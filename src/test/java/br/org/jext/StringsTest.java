@@ -25,6 +25,7 @@ public class StringsTest {
       System.out.println(Strings.max("Meu nome é Lorenzo!"));
       System.out.println(Strings.getOrDefault(null, "vazio"));
       System.out.println(Strings.getOrEmpty(null));
+      System.out.println(Strings.compile(Template.of("Nome: $nome").put("nome", "Thiago")));
    }
    
 }
