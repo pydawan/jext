@@ -1051,7 +1051,7 @@ public final class StringUtil {
     }
     
     public static String getOrEmpty(final String string) {
-        return getOrDefault(null);
+        return getOrDefault(string);
     }
     
     public static <T extends Throwable> String getOrThrow(final String string, final Class<? extends T> throwableClass, final String message) throws T {
