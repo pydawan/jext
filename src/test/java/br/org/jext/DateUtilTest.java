@@ -30,7 +30,7 @@ public class DateUtilTest {
           System.out.println("Data de início: " + dates[0]);
           System.out.println("Data de término: " + dates[1]);
       });
-      DateUtil.firstAndLastDateOfToday().forEach(date -> {
+      DateUtil.firstAndLastDatesBetween(DateUtil.parse("10/03/2018", "dd/MM/yyyy"), DateUtil.parse("20/01/2019", "dd/MM/yyyy")).forEach(date -> {
           System.out.println(date[0]);
           System.out.println(date[1]);
       });

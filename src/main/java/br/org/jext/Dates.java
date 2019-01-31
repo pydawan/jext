@@ -1951,7 +1951,7 @@ public final class Dates {
         return getDateArrayBetween(start, end);
     }
     
-    public static List<Date[]> obterDatasIntervalo(Date dataInicio, Date dataTermino) {
+    public static List<Date[]> obterDatasDoIntervalo(Date dataInicio, Date dataTermino) {
         List<Date[]> datas = new ArrayList<>();
         Date[] array = null;
         dataInicio = dataInicio == null ? new Date() : dataInicio;
@@ -2013,12 +2013,12 @@ public final class Dates {
         return datas;
     }
     
-    public static List<Date[]> datasIntervalo(Date dataInicio, Date dataTermino) {
-        return obterDatasIntervalo(dataInicio, dataTermino);
+    public static List<Date[]> datasDoIntervalo(Date dataInicio, Date dataTermino) {
+        return obterDatasDoIntervalo(dataInicio, dataTermino);
     }
     
     public static List<Date[]> getDatesOfInterval(Date start, Date end) {
-        return obterDatasIntervalo(start, end);
+        return obterDatasDoIntervalo(start, end);
     }
     
     public static List<Date[]> datesOfInterval(Date start, Date end) {
@@ -2046,6 +2046,80 @@ public final class Dates {
     
     public static List<Date[]> firstAndLastDateOfToday() {
         return getFirstAndLastDateOfToday();
+    }
+    
+    public static List<Date[]> getFirstAndLastDatesOfInterval(Date start, Date end) {
+        List<Date[]> dates = new ArrayList<>();
+        Date[] dateArray = null;
+        start = start == null ? new Date() : start;
+        end = end == null ? start : end;
+        if (start.equals(end)) {
+            dateArray = new Date[2];
+            dateArray[0] = start;
+            dateArray[1] = DateUtil.lastDateOfMonth(start);
+            dates.add(dateArray);
+        } else if (start.before(end)) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(start);
+            int startMonth = calendar.get(Calendar.MONTH);
+            int startYear = calendar.get(Calendar.YEAR);
+            calendar.setTime(end);
+            int endMonth = calendar.get(Calendar.MONTH);
+            int endYear = calendar.get(Calendar.YEAR);
+            int year = startYear;
+            int month;
+            int day;
+            int lastMonth;
+            Date date;
+            dateArray = new Date[2];
+            dateArray[0] = start;
+            dateArray[1] = DateUtil.lastDateOfMonth(start);
+            dates.add(dateArray);
+            while (year <= endYear) {
+                if (year == startYear) {
+                    month = startMonth + 1;
+                    day = 1;
+                    lastMonth = 11;
+                } else if (year == endYear) {
+                    month = 0;
+                    day = 1;
+                    lastMonth = endMonth - 1;
+                } else {
+                    month = 0;
+                    day = 1;
+                    lastMonth = 11;
+                }
+                while (month <= lastMonth) {
+                    calendar.set(year, month, day, 0, 0, 0);
+                    date = calendar.getTime();
+                    dateArray = new Date[2];
+                    dateArray[0] = DateUtil.firstDateOfMonth(date);
+                    dateArray[1] = DateUtil.lastDateOfMonth(date);
+                    dates.add(dateArray);
+                    month++;
+                }
+                year++;
+            }
+            dateArray = new Date[2];
+            dateArray[0] = DateUtil.firstDateOfMonth(end);
+            dateArray[1] = end;
+            dates.add(dateArray);
+        } else {
+            
+        }
+        return dates;
+    }
+    
+    public static List<Date[]> firstAndLastDatesOfInterval(Date start, Date end) {
+        return firstAndLastDatesOfInterval(start, end);
+    }
+    
+    public static List<Date[]> getFirstAndLastDatesBetween(Date start, Date end) {
+        return getFirstAndLastDatesOfInterval(start, end);
+    }
+    
+    public static List<Date[]> firstAndLastDatesBetween(Date start, Date end) {
+        return getFirstAndLastDatesBetween(start, end);
     }
     
 }
