@@ -22,6 +22,10 @@ public class DateUtilTest {
       System.out.println(DateUtil.toDateFormat("2017-10-18"));
       System.out.println(DateUtil.toDateFormat("2017-10-18 12:57:30"));
       System.out.println(DateUtil.dateSql("2017-10-18 12:57:30"));
+      System.out.println(DateUtil.firstDay());
+      System.out.println(DateUtil.lastDay());
+      System.out.println(DateUtil.firstDateOfMonth());
+      System.out.println(DateUtil.lastDateOfMonth());
    }
    
 }
