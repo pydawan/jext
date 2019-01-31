@@ -457,6 +457,14 @@ public final class Dates {
         return DateUtil.currdate(format);
     }
     
+    public static Date today() {
+        return new Date();
+    }
+    
+    public static String today(String format) {
+        return now(format);
+    }
+    
     public static String currentTimestamp() {
         return now("yyyy-MM-dd HH:mm:ss");
     }
@@ -1735,7 +1743,7 @@ public final class Dates {
     public static Date getFirstDateOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -1791,7 +1799,7 @@ public final class Dates {
     public static Date getLastDateOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
@@ -1819,7 +1827,9 @@ public final class Dates {
     }
     
     public static int getLastDayOfMonth(Date date) {
-        return Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
     
     public static int lastDayOfMonth(Date date) {
@@ -1847,8 +1857,10 @@ public final class Dates {
      * especificadas.
      * 
      * @author thiago-amm
-     * @param dataInicio  data de início do intervalo fechado
-     * @param dataTermino data final do intervalo fechado
+     * @param dataInicio
+     *            data de início do intervalo fechado
+     * @param dataTermino
+     *            data final do intervalo fechado
      * @return lista contendo as datas do intervalo fechado
      * @throws IllegalArgumentException
      */
@@ -2011,6 +2023,29 @@ public final class Dates {
     
     public static List<Date[]> datesOfInterval(Date start, Date end) {
         return getDatesOfInterval(start, end);
+    }
+    
+    public static List<Date[]> getFirstAndLastDateOf(Date date) {
+        List<Date[]> list = new ArrayList<>();
+        if (date != null) {
+            Date[] array = new Date[2];
+            array[0] = DateUtil.firstDateOfMonth(date);
+            array[1] = DateUtil.lastDateOfMonth(date);
+            list.add(array);
+        }
+        return list;
+    }
+    
+    public static List<Date[]> getFirstAndLastDateOfToday() {
+        return getFirstAndLastDateOf(new Date());
+    }
+    
+    public static List<Date[]> firstAndLastDateOf(Date date) {
+        return getFirstAndLastDateOf(date);
+    }
+    
+    public static List<Date[]> firstAndLastDateOfToday() {
+        return getFirstAndLastDateOfToday();
     }
     
 }

@@ -30,6 +30,10 @@ public class DateUtilTest {
           System.out.println("Data de início: " + dates[0]);
           System.out.println("Data de término: " + dates[1]);
       });
+      DateUtil.firstAndLastDateOfToday().forEach(date -> {
+          System.out.println(date[0]);
+          System.out.println(date[1]);
+      });
    }
    
 }
