@@ -26,6 +26,10 @@ public class DateUtilTest {
       System.out.println(DateUtil.lastDay());
       System.out.println(DateUtil.firstDateOfMonth());
       System.out.println(DateUtil.lastDateOfMonth());
+      DateUtil.datesOfInterval(DateUtil.parse("10/03/2018", "dd/MM/yyyy"), DateUtil.parse("20/01/2019", "dd/MM/yyyy")).forEach(dates -> {
+          System.out.println("Data de início: " + dates[0]);
+          System.out.println("Data de término: " + dates[1]);
+      });
    }
    
 }

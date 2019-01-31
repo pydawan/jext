@@ -1735,7 +1735,7 @@ public final class DateUtil {
     public static Date getFirstDateOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -1939,21 +1939,78 @@ public final class DateUtil {
         return getDateArrayBetween(start, end);
     }
     
-//    Intervalo
-//
-//    Data de início: 10/03/2018
-//    Data de término: 20/01/2019
-//
-//    03/2018 = (10/03/2018, 31/03/2018)
-//    04/2018 = (01/04/2018, 30/04/2018)
-//    05/2018 = (01/05/2018, 31/05/2018)
-//    06/2018 = (01/06/2018, 30/06/2018)
-//    07/2018 = (01/07/2018, 31/07/2018)
-//    08/2018 = (01/08/2018, 31/08/2018)
-//    09/2018 = (01/09/2018, 30/09/2018)
-//    10/2018 = (01/10/2018, 31/10/2018)
-//    11/2018 = (01/11/2018, 30/11/2018)
-//    12/2018 = (01/12/2018, 31/12/2018)
-//    01/2019 = (01/01/2019, 31/01/2019)
+    public static List<Date[]> obterDatasIntervalo(Date dataInicio, Date dataTermino) {
+        List<Date[]> datas = new ArrayList<>();
+        Date[] array = null;
+        dataInicio = dataInicio == null ? new Date() : dataInicio;
+        dataTermino = dataTermino == null ? dataInicio : dataTermino;
+        if (dataInicio.equals(dataTermino)) {
+            array = new Date[2];
+            array[0] = DateUtil.firstDateOfMonth(dataInicio);
+            array[1] = DateUtil.lastDateOfMonth(dataInicio);
+            datas.add(array);
+        } else if (dataInicio.before(dataTermino)) {
+            Calendar calendario = Calendar.getInstance();
+            calendario.setTime(dataInicio);
+            int mesInicio = calendario.get(Calendar.MONTH);
+            int anoInicio = calendario.get(Calendar.YEAR);
+            calendario.setTime(dataTermino);
+            int mesTermino = calendario.get(Calendar.MONTH);
+            int anoTermino = calendario.get(Calendar.YEAR);
+            int ano = anoInicio;
+            int mes;
+            int dia;
+            int ultimoMes;
+            Date data;
+            array = new Date[2];
+            array[0] = DateUtil.firstDateOfMonth(dataInicio);
+            array[1] = DateUtil.lastDateOfMonth(dataInicio);
+            datas.add(array);
+            while (ano <= anoTermino) {
+                if (ano == anoInicio) {
+                    mes = mesInicio + 1;
+                    dia = 1;
+                    ultimoMes = 11;
+                } else if (ano == anoTermino) {
+                    mes = 0;
+                    dia = 1;
+                    ultimoMes = mesTermino - 1;
+                } else {
+                    mes = 0;
+                    dia = 1;
+                    ultimoMes = 11;
+                }
+                while (mes <= ultimoMes) {
+                    calendario.set(ano, mes, dia, 0, 0, 0);
+                    data = calendario.getTime();
+                    array = new Date[2];
+                    array[0] = DateUtil.firstDateOfMonth(data);
+                    array[1] = DateUtil.lastDateOfMonth(data);
+                    datas.add(array);
+                    mes++;
+                }
+                ano++;
+            }
+            array = new Date[2];
+            array[0] = DateUtil.firstDateOfMonth(dataTermino);
+            array[1] = DateUtil.lastDateOfMonth(dataTermino);
+            datas.add(array);
+        } else {
+            
+        }
+        return datas;
+    }
+    
+    public static List<Date[]> datasIntervalo(Date dataInicio, Date dataTermino) {
+        return obterDatasIntervalo(dataInicio, dataTermino);
+    }
+    
+    public static List<Date[]> getDatesOfInterval(Date start, Date end) {
+        return obterDatasIntervalo(start, end);
+    }
+    
+    public static List<Date[]> datesOfInterval(Date start, Date end) {
+        return getDatesOfInterval(start, end);
+    }
     
 }
