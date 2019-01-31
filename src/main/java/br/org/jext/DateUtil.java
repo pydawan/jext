@@ -1618,9 +1618,233 @@ public final class DateUtil {
         return horaCompleta();
     }
     
+    public static Date parse(String text, String pattern) throws IllegalArgumentException {
+        Date date = null;
+        text = text == null ? "" : text;
+        pattern = pattern == null ? "" : pattern;
+        if (text.isEmpty()) {
+            throw new IllegalArgumentException("text não pode ser null ou string vazia!");
+        }
+        if (pattern.isEmpty()) {
+            throw new IllegalArgumentException("pattern não pode ser null ou string vazia!");
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        try {
+            date = sdf.parse(text);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+    
+    public static Date parseDate(String text, String pattern) throws IllegalArgumentException, ParseException {
+        return parse(text, pattern);
+    }
+    
     /**
-     * Obtém a lista de datas do intervalo fechado a partir da data de início até a
-     * data de término especificadas.
+     * Subtrai days dias a uma data.
+     * 
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date minusDays(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - days);
+        return calendar.getTime();
+    }
+    
+    public static Date minus(Date date, Integer days) {
+        return minusDays(date, days);
+    }
+    
+    public static Date subtrairDias(Date data, Integer dias) {
+        return minusDays(data, dias);
+    }
+    
+    public static Date subtrair(Date data, Integer dias) {
+        return subtrairDias(data, dias);
+    }
+    
+    public static Date addDays(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, days);
+        return calendar.getTime();
+    }
+    
+    public static Date add(Date date, Integer days) {
+        return addDays(date, days);
+    }
+    
+    public static Date adicionarDias(Date data, Integer dias) {
+        return addDays(data, dias);
+    }
+    
+    public static Date adicionar(Date data, Integer dias) {
+        return adicionarDias(data, dias);
+    }
+    
+    public static Date getMaximumHour(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.MILLISECOND, 999);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.HOUR, 11);
+        cal.set(Calendar.AM_PM, Calendar.PM);
+        return cal.getTime();
+    }
+    
+    public static Date getMinimumHour(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.AM_PM, Calendar.AM);
+        return cal.getTime();
+    }
+    
+    public static Date getMaxHour(Date date) {
+        return getMaximumHour(date);
+    }
+    
+    public static Date getMinHour(Date date) {
+        return getMinimumHour(date);
+    }
+    
+    public static Date maximumHour(Date date) {
+        return getMaximumHour(date);
+    }
+    
+    public static Date minimumHour(Date date) {
+        return getMinimumHour(date);
+    }
+    
+    public static Date maxHour(Date date) {
+        return maximumHour(date);
+    }
+    
+    public static Date minHour(Date date) {
+        return minimumHour(date);
+    }
+    
+    public static Date getFirstDateOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();
+    }
+    
+    public static Date firstDateOfMonth(Date date) {
+        return getFirstDateOfMonth(date);
+    }
+    
+    public static Date firstDate(Date date) {
+        return firstDateOfMonth(date);
+    }
+    
+    public static Date getFirstDateOfMonth() {
+        return getFirstDateOfMonth(new Date());
+    }
+    
+    public static Date firstDateOfMonth() {
+        return getFirstDateOfMonth();
+    }
+    
+    public static Date firstDate() {
+        return firstDateOfMonth();
+    }
+    
+    public static int getFirstDayOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+    }
+    
+    public static int firstDayOfMonth(Date date) {
+        return getFirstDayOfMonth(date);
+    }
+    
+    public static int firstDay(Date date) {
+        return firstDayOfMonth(date);
+    }
+    
+    public static int getFirstDayOfMonth() {
+        return getFirstDayOfMonth(new Date());
+    }
+    
+    public static int firstDayOfMonth() {
+        return getFirstDayOfMonth();
+    }
+    
+    public static int firstDay() {
+        return getFirstDayOfMonth();
+    }
+    
+    public static Date getLastDateOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        return calendar.getTime();
+    }
+    
+    public static Date lastDateOfMonth(Date date) {
+        return getLastDateOfMonth(date);
+    }
+    
+    public static Date lastDate(Date date) {
+        return lastDateOfMonth(date);
+    }
+    
+    public static Date getLastDateOfMonth() {
+        return getLastDateOfMonth(new Date());
+    }
+    
+    public static Date lastDateOfMonth() {
+        return getLastDateOfMonth();
+    }
+    
+    public static Date lastDate() {
+        return lastDateOfMonth();
+    }
+    
+    public static int getLastDayOfMonth(Date date) {
+        return Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+    
+    public static int lastDayOfMonth(Date date) {
+        return getLastDayOfMonth(date);
+    }
+    
+    public static int lastDay(Date date) {
+        return lastDayOfMonth(date);
+    }
+    
+    public static int getLastDayOfMonth() {
+        return getLastDayOfMonth(new Date());
+    }
+    
+    public static int lastDayOfMonth() {
+        return getLastDayOfMonth();
+    }
+    
+    public static int lastDay() {
+        return lastDayOfMonth();
+    }
+    
+    /**
+     * Obtém a lista de datas do intervalo fechado a partir da data de início até a data de término
+     * especificadas.
      * 
      * @author thiago-amm
      * @param dataInicio  data de início do intervalo fechado
@@ -1714,5 +1938,22 @@ public final class DateUtil {
     public static Date[] dateArrayBetween(Date start, Date end) {
         return getDateArrayBetween(start, end);
     }
+    
+//    Intervalo
+//
+//    Data de início: 10/03/2018
+//    Data de término: 20/01/2019
+//
+//    03/2018 = (10/03/2018, 31/03/2018)
+//    04/2018 = (01/04/2018, 30/04/2018)
+//    05/2018 = (01/05/2018, 31/05/2018)
+//    06/2018 = (01/06/2018, 30/06/2018)
+//    07/2018 = (01/07/2018, 31/07/2018)
+//    08/2018 = (01/08/2018, 31/08/2018)
+//    09/2018 = (01/09/2018, 30/09/2018)
+//    10/2018 = (01/10/2018, 31/10/2018)
+//    11/2018 = (01/11/2018, 30/11/2018)
+//    12/2018 = (01/12/2018, 31/12/2018)
+//    01/2019 = (01/01/2019, 31/01/2019)
     
 }
