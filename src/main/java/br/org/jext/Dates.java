@@ -1857,10 +1857,8 @@ public final class Dates {
      * especificadas.
      * 
      * @author thiago-amm
-     * @param dataInicio
-     *            data de início do intervalo fechado
-     * @param dataTermino
-     *            data final do intervalo fechado
+     * @param dataInicio  data de início do intervalo fechado
+     * @param dataTermino data final do intervalo fechado
      * @return lista contendo as datas do intervalo fechado
      * @throws IllegalArgumentException
      */
@@ -2055,7 +2053,7 @@ public final class Dates {
         end = end == null ? start : end;
         if (start.equals(end)) {
             dateArray = new Date[2];
-            dateArray[0] = start;
+            dateArray[0] = DateUtil.firstDateOfMonth(start);
             dateArray[1] = DateUtil.lastDateOfMonth(start);
             dates.add(dateArray);
         } else if (start.before(end)) {
@@ -2072,7 +2070,7 @@ public final class Dates {
             int lastMonth;
             Date date;
             dateArray = new Date[2];
-            dateArray[0] = start;
+            dateArray[0] = DateUtil.firstDateOfMonth(start);
             dateArray[1] = DateUtil.lastDateOfMonth(start);
             dates.add(dateArray);
             while (year <= endYear) {
@@ -2102,7 +2100,7 @@ public final class Dates {
             }
             dateArray = new Date[2];
             dateArray[0] = DateUtil.firstDateOfMonth(end);
-            dateArray[1] = end;
+            dateArray[1] = DateUtil.lastDateOfMonth(end);
             dates.add(dateArray);
         } else {
             
