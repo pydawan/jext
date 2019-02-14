@@ -1968,27 +1968,33 @@ public final class Dates {
             int mesTermino = calendario.get(Calendar.MONTH);
             int anoTermino = calendario.get(Calendar.YEAR);
             int ano = anoInicio;
-            int mes;
-            int dia;
-            int ultimoMes;
+            int mes = 0;
+            int dia = 0;
+            int ultimoMes = 0;
             Date data;
             array = new Date[2];
             array[0] = DateUtil.firstDateOfMonth(dataInicio);
             array[1] = DateUtil.lastDateOfMonth(dataInicio);
             datas.add(array);
             while (ano <= anoTermino) {
-                if (ano == anoInicio) {
-                    mes = mesInicio + 1;
-                    dia = 1;
-                    ultimoMes = 11;
-                } else if (ano == anoTermino) {
-                    mes = 0;
-                    dia = 1;
-                    ultimoMes = mesTermino - 1;
+                if (anoInicio != anoTermino) {
+                    if (ano == anoInicio) {
+                        mes = mesInicio + 1;
+                        dia = 1;
+                        ultimoMes = 11;
+                    } else if (ano == anoTermino) {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = mesTermino - 1;
+                    } else {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = 11;
+                    }
                 } else {
-                    mes = 0;
                     dia = 1;
-                    ultimoMes = 11;
+                    mes = mesInicio + 1;
+                    ultimoMes = mesTermino - 1;
                 }
                 while (mes <= ultimoMes) {
                     calendario.set(ano, mes, dia, 0, 0, 0);
@@ -2074,18 +2080,24 @@ public final class Dates {
             dateArray[1] = DateUtil.lastDateOfMonth(start);
             dates.add(dateArray);
             while (year <= endYear) {
-                if (year == startYear) {
-                    month = startMonth + 1;
-                    day = 1;
-                    lastMonth = 11;
-                } else if (year == endYear) {
-                    month = 0;
-                    day = 1;
-                    lastMonth = endMonth - 1;
+                if (startYear != endYear) {
+                    if (year == startYear) {
+                        month = startMonth + 1;
+                        day = 1;
+                        lastMonth = 11;
+                    } else if (year == endYear) {
+                        month = 0;
+                        day = 1;
+                        lastMonth = endMonth - 1;
+                    } else {
+                        month = 0;
+                        day = 1;
+                        lastMonth = 11;
+                    }
                 } else {
-                    month = 0;
                     day = 1;
-                    lastMonth = 11;
+                    month = startMonth + 1;
+                    lastMonth = endMonth - 1;
                 }
                 while (month <= lastMonth) {
                     calendar.set(year, month, day, 0, 0, 0);
