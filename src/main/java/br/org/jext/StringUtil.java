@@ -5,6 +5,7 @@ import static br.org.verify.Verify.isList;
 import static br.org.verify.Verify.isMap;
 import static br.org.verify.Verify.isNotEmptyOrNull;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
@@ -283,8 +284,41 @@ public final class StringUtil {
       return "";
    }
    
-   public static String repeat(String string, int times) {
-      return times(string, times);
+   public static String repeat(Object object, int amount) {
+       String s = "";
+       s = repeat(object, amount, false);
+       return s;
+   }
+
+   public static String repeat(Object object, int amount, boolean vertical) {
+       String s = "";
+       s = repeat("", object, amount, vertical);
+       return s;
+   }
+
+   public static String repeat(String format, Object object, int amount, boolean vertical) {
+       String s = "";
+       if (object != null && !object.toString().isEmpty() && amount > 0) {
+           for (int i = 0; i < amount; i++) {
+               if (vertical) {
+                   if (format == null || format.isEmpty()) {
+                       s += object + "\n";
+                   } else {
+                       s += String.format(format, object) + "\n";
+                   }
+               } else {
+                   if (format == null || format.isEmpty()) {
+                       s += object;
+                   } else {
+                       s += String.format(format, object);
+                   }
+               }
+           }
+           if (vertical) {
+               s = s.substring(0, s.lastIndexOf("\n"));
+           }
+       }
+       return s;
    }
    
    public static String multiply(String string, int times) {
@@ -1119,6 +1153,21 @@ public final class StringUtil {
     
     public static String compile(Template template) throws IllegalArgumentException {
         return template.compile();
+    }
+    
+    public static String decode(String string, String sourceCharset, String targetCharset) {
+        String decodedString = "";
+        string = string == null ? "" : string;
+        sourceCharset = sourceCharset == null ? "" : sourceCharset;
+        targetCharset = targetCharset == null ? "" : targetCharset;
+        if ( !string.isEmpty() && !sourceCharset.isEmpty() && !targetCharset.isEmpty() ) {
+            try {
+                decodedString = new String(string.getBytes(sourceCharset), targetCharset);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return decodedString;
     }
    
 }
