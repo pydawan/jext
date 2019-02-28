@@ -37,6 +37,12 @@ public class ShortcutTest {
          )
       );
       $.println($.range(1, 50));
+      int[] numeros = {1, 2, 3, 4, 5, 6, 7};
+      $.forEach(numeros, new Function<Integer>() {
+          public void run() {
+              $.println(this.value);
+          }
+      });
    }
    
 }

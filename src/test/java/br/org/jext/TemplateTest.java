@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * @author thiago-amm
  * @version v1.0.0 11/01/2019
- * @since v1.0.0 bnhbk ll
+ * @since v1.0.0
  */
 public class TemplateTest {
     
