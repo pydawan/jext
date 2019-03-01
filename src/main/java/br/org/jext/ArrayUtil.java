@@ -158,4 +158,9 @@ public class ArrayUtil {
         return join(", ", array);
     }
     
+    @SafeVarargs
+    public static <T> T[] of (T... elements) {
+        return elements;
+    }
+    
 }
