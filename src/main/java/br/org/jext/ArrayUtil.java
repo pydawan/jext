@@ -13,6 +13,7 @@ public class ArrayUtil {
     public static final Object[] EMPTY_OBJECT_ARRAY = new Object[] {};
     public static final Integer[] EMPTY_INTEGER_ARRAY = new Integer[] {};
     public static final String[] EMPTY_STRING_ARRAY = new String[] {};
+    public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[] {};
     
     public static Object[] array(Object... objects) {
         return objects;
@@ -117,13 +118,14 @@ public class ArrayUtil {
     
     public static Integer[] parseInt(String text, String delimiter) {
         Integer[] iArray = EMPTY_INTEGER_ARRAY;
-        text = text == null ? "" : text;
+        text = text == null ? "" : text.trim();
+        text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
         if (text.contains(",")) {
             text = text.replace(", ", ",");
             text = text.replace(" , ", ",");
             text = text.replace(" ,", ",");
-            if (text.matches("(\\d+,\\d+)+")) {
+            if (text.matches("^(\\d+,)+\\d+$")) {
                 iArray = ArrayUtil.parseInt(text.split(delimiter));
             }
         } else {
@@ -137,6 +139,45 @@ public class ArrayUtil {
     
     public static Integer[] parseInt(String text) {
         return parseInt(text, null);
+    }
+    
+    public static Boolean[] parseBoolean(String... sArray) {
+        Boolean[] bArray = sArray != null && sArray.length > 0 ? new Boolean[sArray.length] : EMPTY_BOOLEAN_ARRAY;
+        if (isNotEmpty((Object[]) sArray)) {
+            String s = "";
+            for (int i = 0; i < sArray.length; i++) {
+                s = sArray[i];
+                if (s != null && s.matches("^(false|true)$")) {
+                    bArray[i] = Boolean.parseBoolean(s);
+                }
+            }
+        }
+        return bArray;
+    }
+    
+    public static Boolean[] parseBoolean(String text, String delimiter) {
+        Boolean[] bArray = EMPTY_BOOLEAN_ARRAY;
+        text = text == null ? "" : text.trim();
+        text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
+        delimiter = delimiter == null ? "," : delimiter;
+        if (text.contains(",")) {
+            text = text.replace(", ", ",");
+            text = text.replace(" , ", ",");
+            text = text.replace(" ,", ",");
+            if (text.matches("^((false|true),)+(false|true)$")) {
+                bArray = ArrayUtil.parseBoolean(text.split(delimiter));
+            }
+        } else {
+            bArray = new Boolean[1];
+            if (text.matches("(false|true)")) {
+                bArray[0] = Boolean.parseBoolean(text);
+            }
+        }
+        return bArray;
+    }
+    
+    public static Boolean[] parseBoolean(String text) {
+        return parseBoolean(text, null);
     }
     
     public static String join(String delimiter, Object... array) {
