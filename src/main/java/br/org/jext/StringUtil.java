@@ -7,9 +7,12 @@ import static br.org.verify.Verify.isNotEmptyOrNull;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +33,7 @@ import br.org.verify.Verify;
  */
 public final class StringUtil {
    
-   private static final List<String> EMPTY_STRINGS_LIST = new ArrayList<>(0);
+   private static final List<String> EMPTY_STRINGS_LIST = Collections.unmodifiableList(new ArrayList<>(0));
    
    public static final String EMPTY_STRING = "";
    
@@ -853,6 +856,34 @@ public final class StringUtil {
       return result;
    }
    
+   public static String join(String delimiter, Object... values) {
+       String result = "";
+       delimiter = delimiter == null ? "," : delimiter;
+       if (ArrayUtil.isNotEmpty(values)) {
+           for (int i = 0; i < values.length; i++) {
+               result += values[i] + delimiter;
+           }
+           result = result.endsWith(delimiter) ? result.substring(0, result.lastIndexOf(delimiter)) : result;
+       }
+       return result;
+   }
+   
+   public static String join(Object... values) {
+       return StringUtil.join(null, values);
+   }
+   
+   public static String join(String delimiter, List<?>... lists) {
+       String result = "";
+       if (lists != null) {
+           for (List<?> list : lists) {
+               if (list != null) {
+                   result += StringUtil.join(delimiter, list.toArray());
+               }
+           }
+       }
+       return result;
+   }
+   
    /**
     * Retorna uma cópia do texto onde cada primeiro caractere de cada palavra é
     * tornado maiúsculo.
@@ -1049,44 +1080,263 @@ public final class StringUtil {
       return !containsNullOrEmpty(strings);
    }
    
+   public static Boolean[] parseBoolean(String... strings) {
+       Boolean[] booleans = null;
+       if (notContainsNullOrEmpty(strings)) {
+           booleans = ArrayUtil.parseBoolean(strings);
+       }
+       return booleans;
+   }
+   
+   public static Boolean[] parseBooleanArray(String string, String delimiter) {
+       Boolean[] booleans = null;
+       String regex = RegexUtil.BOOLEAN_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           booleans = ArrayUtil.parseBoolean(strings);
+       }
+       return booleans;
+   }
+   
+   public static Boolean[] parseBoolean(String string) {
+       Boolean[] booleans = parseBoolean(string, ",");
+       return booleans;
+   }
+   
+   public static Character[] parseCharacter(String... strings) {
+       Character[] characters = null;
+       if (notContainsNullOrEmpty(strings)) {
+           characters = ArrayUtil.parseCharacter(strings);
+       }
+       return characters;
+   }
+   
+   public static Character[] parseCharacterArray(String string, String delimiter) {
+       Character[] characters = null;
+       String regex = RegexUtil.CHARACTER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           characters = ArrayUtil.parseCharacter(strings);
+       }
+       return characters;
+   }
+   
+   public static Character[] parseCharacter(String string) {
+       Character[] characters = parseCharacter(string, ",");
+       return characters;
+   }
+   
+   public static Byte[] parseByte(String... strings) {
+       Byte[] bytes = null;
+       if (notContainsNullOrEmpty(strings)) {
+           bytes = ArrayUtil.parseByte(strings);
+       }
+       return bytes;
+   }
+   
+   public static Byte[] parseByteArray(String string, String delimiter) {
+       Byte[] bytes = null;
+       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           bytes = ArrayUtil.parseByte(strings);
+       }
+       return bytes;
+   }
+   
+   public static Byte[] parseByte(String string) {
+       Byte[] bytes = parseByte(string, ",");
+       return bytes;
+   }
+   
+   public static Short[] parseShort(String... strings) {
+       Short[] shorts = null;
+       if (notContainsNullOrEmpty(strings)) {
+           shorts = ArrayUtil.parseShort(strings);
+       }
+       return shorts;
+   }
+   
+   public static Short[] parseShortArray(String string, String delimiter) {
+       Short[] shorts = null;
+       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           shorts = ArrayUtil.parseShort(strings);
+       }
+       return shorts;
+   }
+   
+   public static Short[] parseShort(String string) {
+       Short[] shorts = parseShort(string, ",");
+       return shorts;
+   }
+   
    public static Integer[] parseInt(String... strings) {
-      Integer[] integers = null;
-      if (notContainsNullOrEmpty(strings)) {
-         integers = ArrayUtil.parseInt(strings);
-      }
-      return integers;
+       Integer[] integers = null;
+       if (notContainsNullOrEmpty(strings)) {
+           integers = ArrayUtil.parseInt(strings);
+       }
+       return integers;
    }
    
    public static Integer[] parseIntArray(String string, String delimiter) {
-      Integer[] integers = null;
-      String regex = String.format("\\d+(%s\\d+)*", delimiter);
-      if (isNotNullOrEmpty(string) && string.matches(regex)) {
-         String[] strings = string.split(delimiter);
-         integers = ArrayUtil.parseInt(strings);
-      }
-      return integers;
+       Integer[] integers = null;
+       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           integers = ArrayUtil.parseInt(strings);
+       }
+       return integers;
    }
    
    public static Integer[] parseInt(String string) {
-      Integer[] integers = parseIntArray(string, ",");
-      return integers;
+       Integer[] integers = parseIntArray(string, ","); 
+       return integers;
    }
    
-    public static String getOrDefault(final String string, final String defaultString) {
-        String _defaultString = defaultString == null ? "" : defaultString;
-        if (string == null) {
-            return _defaultString;
-        }
-        return string;
-    }
-    
-    public static String getOrDefault(final String string) {
-        return getOrDefault(string, null);
-    }
-    
-    public static String getOrEmpty(final String string) {
-        return getOrDefault(string);
-    }
+   public static Long[] parseLong(String... strings) {
+       Long[] longs = null;
+       if (notContainsNullOrEmpty(strings)) {
+           longs = ArrayUtil.parseLong(strings);
+       }
+       return longs;
+   }
+   
+   public static Long[] parseLongArray(String string, String delimiter) {
+       Long[] longs = null;
+       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           longs = ArrayUtil.parseLong(strings);
+       }
+       return longs;
+   }
+   
+   public static Long[] parseLong(String string) {
+       Long[] longs = parseLongArray(string, ",");
+       return longs;
+   }
+   
+   public static Float[] parseFloat(String... strings) {
+       Float[] floats = null;
+       if (notContainsNullOrEmpty(strings)) {
+           floats = ArrayUtil.parseFloat(strings);
+       }
+       return floats;
+   }
+   
+   public static Float[] parseFloatArray(String string, String delimiter) {
+       Float[] floats = null;
+       String regex = RegexUtil.FLOAT_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           floats = ArrayUtil.parseFloat(strings);
+       }
+       return floats;
+   }
+   
+   public static Float[] parseFloat(String string) {
+       Float[] floats = parseFloatArray(string, ",");
+       return floats;
+   }
+   
+   public static Double[] parseDouble(String... strings) {
+       Double[] doubles = null;
+       if (notContainsNullOrEmpty(strings)) {
+           doubles = ArrayUtil.parseDouble(strings);
+       }
+       return doubles;
+   }
+   
+   public static Double[] parseDoubleArray(String string, String delimiter) {
+       Double[] doubles = null;
+       String regex = RegexUtil.DOUBLE_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           doubles = ArrayUtil.parseDouble(strings);
+       }
+       return doubles;
+   }
+   
+   public static Double[] parseDouble(String string) {
+       Double[] doubles = parseDoubleArray(string, ",");
+       return doubles;
+   }
+   
+   public static BigInteger[] parseBigInt(String... strings) {
+       BigInteger[] bigIntegers = null;
+       if (notContainsNullOrEmpty(strings)) {
+           bigIntegers = ArrayUtil.parseBigInt(strings);
+       }
+       return bigIntegers;
+   }
+   
+   public static BigInteger[] parseBigIntArray(String string, String delimiter) {
+       BigInteger[] bigIntegers = null;
+       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           bigIntegers = ArrayUtil.parseBigInt(strings);
+       }
+       return bigIntegers;
+   }
+   
+   public static BigInteger[] parseBigInt(String string) {
+       BigInteger[] bigIntegers = parseBigIntArray(string, ","); 
+       return bigIntegers;
+   }
+   
+   public static BigDecimal[] parseBigDecimal(String... strings) {
+       BigDecimal[] bigDecimals = null;
+       if (notContainsNullOrEmpty(strings)) {
+           bigDecimals = ArrayUtil.parseBigDecimal(strings);
+       }
+       return bigDecimals;
+   }
+   
+   public static BigDecimal[] parseBigDecimalArray(String string, String delimiter) {
+       BigDecimal[] bigDecimals = null;
+       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       if (isNotNullOrEmpty(string) && string.matches(regex)) {
+           String[] strings = string.split(delimiter);
+           bigDecimals = ArrayUtil.parseBigDecimal(strings);
+       }
+       return bigDecimals;
+   }
+   
+   public static BigDecimal[] parseBigDecimal(String string) {
+       BigDecimal[] bigDecimals = parseBigDecimalArray(string, ","); 
+       return bigDecimals;
+   }
+   
+   public static String getOrDefault(final String string, final String defaultString) {
+       String _defaultString = defaultString == null ? "" : defaultString;
+       if (string == null) {
+           return _defaultString;
+       }
+       return string;
+   }
+   
+   public static String getOrDefault(final String string) {
+       return getOrDefault(string, null);
+   }
+   
+   public static String getOrEmpty(final String string) {
+       return getOrDefault(string);
+   }
+   
+   public static String getOrDefault(final Object object, Object defaultObject) {
+       return getOrDefault(object == null ? null : object.toString(), defaultObject == null ? (String) defaultObject : defaultObject.toString());
+   }
+   
+   public static String getOrDefault(final Object object) {
+       return getOrDefault(object, null );
+   }
+   
+   public static String getOrEmpty(final Object object) {
+       return getOrDefault(object);
+   }
     
     public static <T extends Throwable> String getOrThrow(final String string, final Class<? extends T> throwableClass, final String message) throws T {
         if (string == null) {
@@ -1168,6 +1418,108 @@ public final class StringUtil {
             }
         }
         return decodedString;
+    }
+    
+    public static String toHtml(String str) {
+        str = str.replace("Á", "&Aacute;");
+        str = str.replace("á", "&aacute;");
+        str = str.replace("Â", "&Acirc;");
+        str = str.replace("â", "&acirc;");
+        str = str.replace("À", "&Agrave;");
+        str = str.replace("à", "&agrave;");
+        str = str.replace("Ã", "&Atilde;");
+        str = str.replace("ã", "&atilde;");
+        str = str.replace("É", "&Eacute;");
+        str = str.replace("é", "&eacute;");
+        str = str.replace("Ê", "&Ecirc;");
+        str = str.replace("ê", "&ecirc;");
+        str = str.replace("Í", "&Iacute;");
+        str = str.replace("í", "&iacute;");
+        str = str.replace("Î", "&Icirc;");
+        str = str.replace("î", "&icirc;");
+        str = str.replace("Ó", "&Oacute;");
+        str = str.replace("ó", "&oacute;");
+        str = str.replace("Ô", "&Ocirc;");
+        str = str.replace("ô", "&ocirc;");
+        str = str.replace("Õ", "&Otilde;");
+        str = str.replace("õ", "&otilde;");
+        str = str.replace("Ú", "&Uacute;");
+        str = str.replace("ú", "&uacute;");
+        str = str.replace("Û", "&Ucirc;");
+        str = str.replace("û", "&ucirc;");
+        str = str.replace("Ç", "&Ccedil;");
+        str = str.replace("ç", "&ccedil;");
+        str = str.replace("Ñ", "&Ntilde;");
+        str = str.replace("ñ", "&ntilde;");
+        return str;
+    }
+
+    public static String fromHtml(String str) {
+        str = str.replace(";Aacute;" , "Á" );
+        str = str.replace(";aacute;" , "á" );
+        str = str.replace(";Acirc;"  , "Â" );
+        str = str.replace(";acirc;"  , "â" );
+        str = str.replace(";Agrave;" , "À" );
+        str = str.replace(";agrave;" , "à" );
+        str = str.replace(";Atilde;" , "Ã" );
+        str = str.replace(";atilde;" , "ã" );
+        str = str.replace(";Eacute;" , "É" );
+        str = str.replace(";eacute;" , "é" );
+        str = str.replace(";Ecirc;"  , "Ê" );
+        str = str.replace(";ecirc;"  , "ê" );
+        str = str.replace(";Iacute;" , "Í" );
+        str = str.replace(";iacute;" , "í" );
+        str = str.replace(";Icirc;"  , "Î" );
+        str = str.replace(";icirc;"  , "î" );
+        str = str.replace(";Oacute;" , "Ó" );
+        str = str.replace(";oacute;" , "ó" );
+        str = str.replace(";Ocirc;"  , "Ô" );
+        str = str.replace(";ocirc;"  , "ô" );
+        str = str.replace(";Otilde;" , "Õ" );
+        str = str.replace(";otilde;" , "õ" );
+        str = str.replace(";Uacute;" , "Ú" );
+        str = str.replace(";uacute;" , "ú" );
+        str = str.replace(";Ucirc;"  , "Û" );
+        str = str.replace(";ucirc;"  , "û" );
+        str = str.replace(";Ccedil;" , "Ç" );
+        str = str.replace(";ccedil;" , "ç" );
+        str = str.replace(";Ntilde;" , "Ñ" );
+        str = str.replace(";ntilde;" , "ñ" );
+        return str;
+    }
+
+    public static String removeAccents(String str) {
+        str = str.replace("Á", "A");
+        str = str.replace("á", "a");
+        str = str.replace("Â", "A");
+        str = str.replace("â", "a");
+        str = str.replace("À", "A");
+        str = str.replace("à", "a");
+        str = str.replace("Ã", "A");
+        str = str.replace("ã", "a");
+        str = str.replace("É", "E");
+        str = str.replace("é", "e");
+        str = str.replace("Ê", "E");
+        str = str.replace("ê", "e");
+        str = str.replace("Í", "I");
+        str = str.replace("í", "i");
+        str = str.replace("Î", "I");
+        str = str.replace("î", "i");
+        str = str.replace("Ó", "O");
+        str = str.replace("ó", "o");
+        str = str.replace("Ô", "O");
+        str = str.replace("ô", "o");
+        str = str.replace("Õ", "O");
+        str = str.replace("õ", "o");
+        str = str.replace("Ú", "U");
+        str = str.replace("ú", "u");
+        str = str.replace("Û", "U");
+        str = str.replace("û", "u");
+        str = str.replace("Ç", "C");
+        str = str.replace("ç", "c");
+        str = str.replace("Ñ", "N");
+        str = str.replace("ñ", "n");
+        return str;
     }
    
 }

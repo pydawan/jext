@@ -9,8 +9,8 @@ package br.org.jext;
 public class DateTime extends java.util.Date {
    
    private static final long serialVersionUID = 1L;
-   private static final String SQL_DATETIME_FORMAT = Regex.SQL_DATETIME_FORMAT.getValue();
-   private static final String SQL_DATE_FORMAT = Regex.SQL_DATE_FORMAT.getValue();
+   private static final String SQL_DATETIME_FORMAT = Regex.SQL_DATETIME_FORMAT;
+   private static final String SQL_DATE_FORMAT = Regex.SQL_DATE_FORMAT;
    
    public DateTime() {
       super();

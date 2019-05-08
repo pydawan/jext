@@ -2,6 +2,7 @@ package br.org.jext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import br.org.verify.Verify;
 
@@ -13,7 +14,7 @@ import br.org.verify.Verify;
 public final class List<T> {
    
    public static final java.util.List<?> NULL_LIST = null;
-   public static final java.util.List<?> EMPTY_LIST = new ArrayList<>(0);
+   public static final java.util.List<?> EMPTY_LIST = Collections.unmodifiableList(new ArrayList<>(0));
    
    @SafeVarargs
    public static <T> java.util.List<T> of(T... o) {

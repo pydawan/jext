@@ -1,6 +1,7 @@
 package br.org.jext;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class Dict<K, V> extends HashMap<K, V> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.Map<Object, Object> NULL_DICT = null;
-   public static final java.util.Map<Object, Object> EMPTY_DICT = new HashMap<>();
+   public static final java.util.Map<Object, Object> EMPTY_DICT = Collections.unmodifiableMap(new HashMap<>(0));
    
    @SuppressWarnings("unchecked")
    public Dict(Object... objects) {

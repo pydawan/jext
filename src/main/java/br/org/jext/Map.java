@@ -1,6 +1,7 @@
 package br.org.jext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import br.org.verify.Verify;
@@ -13,7 +14,7 @@ import br.org.verify.Verify;
 public final class Map<K, V> {
    
    public static final java.util.Map<Object, Object> NULL_MAP = null;
-   public static final java.util.Map<Object, Object> EMPTY_MAP = new HashMap<>(0);
+   public static final java.util.Map<Object, Object> EMPTY_MAP = Collections.unmodifiableMap(new HashMap<>(0));
    
    public static MapItem item(Object key, Object value) {
       if (Verify.notContainsEmptyOrNull(key, value)) {

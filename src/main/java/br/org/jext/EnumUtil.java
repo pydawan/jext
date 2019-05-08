@@ -2,6 +2,7 @@ package br.org.jext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Random;
  */
 public class EnumUtil {
    
-   private static final java.util.List<?> EMPTY_LIST = new ArrayList<>(0);
+   private static final java.util.List<?> EMPTY_LIST = Collections.unmodifiableList(new ArrayList<>(0));
    
    public static Class<?> getRandom(Class<?> clazz) {
       Class<?> value = null;

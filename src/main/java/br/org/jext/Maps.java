@@ -1,5 +1,6 @@
 package br.org.jext;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import br.org.verify.Verify;
 public final class Maps<K, V> {
    
    public static final Map<Object, Object> NULL_MAP = null;
-   public static final Map<Object, Object> EMPTY_MAP = new HashMap<>(0);
+   public static final Map<Object, Object> EMPTY_MAP = Collections.unmodifiableMap(new HashMap<>(0));
    
    public static <K, V> Map<K, V> of() {
       return new HashMap<K, V>();

@@ -1,5 +1,6 @@
 package br.org.jext;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import br.org.verify.Verifique;
@@ -14,7 +15,7 @@ public class Mapa extends HashMap<Object, Object> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.Map<Object, Object> MAPA_NULO = null;
-   public static final java.util.Map<Object, Object> MAPA_VAZIO = new HashMap<>(0);
+   public static final java.util.Map<Object, Object> MAPA_VAZIO = Collections.unmodifiableMap(new HashMap<>(0));
    
    public static Mapa de(Object chave, Object valor) {
       Mapa mapa = new Mapa();

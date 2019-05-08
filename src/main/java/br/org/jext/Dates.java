@@ -523,7 +523,7 @@ public final class Dates {
     
     public static Date datetime(String value) {
         Date datetime = null;
-        if (value.matches(Regex.DATETIME_FORMAT.value())) {
+        if (value.matches(Regex.DATETIME_FORMAT)) {
             if (value.endsWith(".S")) {
                 datetime = date(value, "dd/MM/yyyy HH:mm:ss.S");
             } else if (value.endsWith(".SS")) {
@@ -545,7 +545,7 @@ public final class Dates {
     
     public static Date time(String value) {
         Date time = null;
-        if (value.matches(Regex.SQL_TIME_FORMAT.value())) {
+        if (value.matches(Regex.SQL_TIME_FORMAT)) {
             if (value.endsWith(".S")) {
                 time = date(value, "HH:mm:ss.S");
             } else if (value.endsWith(".SS")) {
@@ -567,7 +567,7 @@ public final class Dates {
     
     public static Date toDatetimeSql(String value) {
         Date datetime = null;
-        if (value.matches(Regex.SQL_DATETIME_FORMAT.value())) {
+        if (value.matches(Regex.SQL_DATETIME_FORMAT)) {
             if (value.endsWith(".S")) {
                 datetime = date(value, "yyyy-MM-dd HH:mm:ss.S");
             } else if (value.endsWith(".SS")) {
@@ -616,7 +616,7 @@ public final class Dates {
         String ano = null;
         String horas = null;
         if (isNotNullOrEmpty(dateFormat)) {
-            if (dateFormat.matches(Regex.DATETIME_FORMAT.value())) {
+            if (dateFormat.matches(Regex.DATETIME_FORMAT)) {
                 datahora = dateFormat.split(" ");
                 data = datahora[0];
                 horas = datahora[1];
@@ -626,13 +626,13 @@ public final class Dates {
                 ano = datahora[2];
                 data = String.format("%s-%s-%s", ano, mes, dia);
                 sqlFormat = String.format("%s %s", data, horas);
-            } else if (dateFormat.matches(Regex.DATE_FORMAT.value())) {
+            } else if (dateFormat.matches(Regex.DATE_FORMAT)) {
                 datahora = dateFormat.split("/");
                 dia = datahora[0];
                 mes = datahora[1];
                 ano = datahora[2];
                 sqlFormat = String.format("%s-%s-%s", ano, mes, dia);
-            } else if (dateFormat.matches(Regex.TIME_FORMAT.value())) {
+            } else if (dateFormat.matches(Regex.TIME_FORMAT)) {
                 sqlFormat = dateFormat;
             } else {
                 throw new IllegalArgumentException("ATENÇÃO: formato de data SQL inválido!");
@@ -654,7 +654,7 @@ public final class Dates {
         String mes = null;
         String ano = null;
         if (isNotNullOrEmpty(sqlFormat)) {
-            if (sqlFormat.matches(Regex.SQL_DATETIME_FORMAT.value())) {
+            if (sqlFormat.matches(Regex.SQL_DATETIME_FORMAT)) {
                 datahora = sqlFormat.split(" ");
                 data = datahora[0];
                 horas = datahora[1];
@@ -664,13 +664,13 @@ public final class Dates {
                 dia = datahora[2];
                 data = String.format("%s/%s/%s", dia, mes, ano);
                 dateFormat = String.format("%s %s", data, horas);
-            } else if (sqlFormat.matches(Regex.SQL_DATE_FORMAT.value())) {
+            } else if (sqlFormat.matches(Regex.SQL_DATE_FORMAT)) {
                 datahora = sqlFormat.split("-");
                 ano = datahora[0];
                 mes = datahora[1];
                 dia = datahora[2];
                 dateFormat = String.format("%s/%s/%s", dia, mes, ano);
-            } else if (sqlFormat.matches(Regex.TIME_FORMAT.value())) {
+            } else if (sqlFormat.matches(Regex.TIME_FORMAT)) {
                 dateFormat = sqlFormat;
             } else {
                 throw new IllegalArgumentException("ATENÇÃO: formato de data inválido!");

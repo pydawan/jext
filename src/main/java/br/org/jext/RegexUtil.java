@@ -6,7 +6,7 @@ package br.org.jext;
  * @version v1.0.1 03/05/2019
  * @since v1.0.0
  */
-public class Regex {
+public class RegexUtil {
     public static final String REGEX_DATA_DIA_MES_ANO = "^\\d{2}/\\d{2}/\\d{4}$";
     public static final String INTEGER_REGEX_PATTERN = "^(\\-|\\+)?\\d+$";
     public static final String INTEGER_LIST_REGEX_PATTERN = "^((\\-|\\+)?\\d+,)*(\\-|\\+)?\\d+$";

@@ -2,6 +2,7 @@ package br.org.jext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import br.org.verify.Verifique;
 
@@ -15,7 +16,7 @@ public class Lista extends ArrayList<Object> {
    private static final long serialVersionUID = 1L;
    
    public static final java.util.List<Object> LISTA_NULA = null;
-   public static final java.util.List<Object> LISTA_VAZIA = new ArrayList<>(0);
+   public static final java.util.List<Object> LISTA_VAZIA = Collections.unmodifiableList(new ArrayList<>(0));
    
    public Lista adicionar(Object... objetos) {
       if (objetos != null) {
