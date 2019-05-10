@@ -7,6 +7,7 @@ package br.org.jext;
  * @since v1.0.0
  */
 public class Regex {
+    // TODO - padronizar a nomenclatura dos itens.
     public static final String REGEX_DATA_DIA_MES_ANO = "^\\d{2}/\\d{2}/\\d{4}$";
     public static final String INTEGER_REGEX_PATTERN = "^(\\-|\\+)?\\d+$";
     public static final String INTEGER_LIST_REGEX_PATTERN = "^((\\-|\\+)?\\d+,)*(\\-|\\+)?\\d+$";
