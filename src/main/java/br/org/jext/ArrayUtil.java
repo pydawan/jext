@@ -6,9 +6,9 @@ import java.math.BigInteger;
 /**
  * Classe utilitária contendo métodos para manipulação de arrays.
  * 
- * @author thiago-amm
- * @version v1.0.0 03/12/2017
- * @version v1.0.1 26/03/2018
+ * @author thiago-amm (Thiago Alexandre Martins Monteiro)
+ * @version v1.0.0 26/03/2018
+ * @version v1.0.1 26/06/2018
  * @since v1.0.0
  */
 public class ArrayUtil {
@@ -126,17 +126,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
-                byArray = ArrayUtil.parseByte(text.split(delimiter));
-            }
-        } else {
-            byArray = new Byte[1];
-            if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
-                byArray[0] = Byte.parseByte(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
+                    byArray = ArrayUtil.parseByte(text.split(delimiter));
+                }
+            } else {
+                byArray = new Byte[1];
+                if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
+                    byArray[0] = Byte.parseByte(text);
+                }
             }
         }
         return byArray;
@@ -165,17 +167,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
-                stArray = ArrayUtil.parseShort(text.split(delimiter));
-            }
-        } else {
-            stArray = new Short[1];
-            if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
-                stArray[0] = Short.parseShort(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
+                    stArray = ArrayUtil.parseShort(text.split(delimiter));
+                }
+            } else {
+                stArray = new Short[1];
+                if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
+                    stArray[0] = Short.parseShort(text);
+                }
             }
         }
         return stArray;
@@ -210,17 +214,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
-                iArray = ArrayUtil.parseInt(text.split(delimiter));
-            }
-        } else {
-            iArray = new Integer[1];
-            if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
-                iArray[0] = Integer.parseInt(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
+                    iArray = ArrayUtil.parseInt(text.split(delimiter));
+                }
+            } else {
+                iArray = new Integer[1];
+                if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
+                    iArray[0] = Integer.parseInt(text);
+                }
             }
         }
         return iArray;
@@ -249,17 +255,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.LONG_LIST_REGEX_PATTERN)) {
-                lArray = ArrayUtil.parseLong(text.split(delimiter));
-            }
-        } else {
-            lArray = new Long[1];
-            if (text.matches("^(\\-|\\+)?\\d+(l|L)$")) {
-                lArray[0] = Long.parseLong(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.LONG_LIST_REGEX_PATTERN)) {
+                    lArray = ArrayUtil.parseLong(text.split(delimiter));
+                }
+            } else {
+                lArray = new Long[1];
+                if (text.matches("^(\\-|\\+)?\\d+(l|L)$")) {
+                    lArray[0] = Long.parseLong(text);
+                }
             }
         }
         return lArray;
@@ -288,17 +296,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.FLOAT_LIST_REGEX_PATTERN)) {
-                fArray = ArrayUtil.parseFloat(text.split(delimiter));
-            }
-        } else {
-            fArray = new Float[1];
-            if (text.matches(RegexUtil.FLOAT_REGEX_PATTERN)) {
-                fArray[0] = Float.parseFloat(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.FLOAT_LIST_REGEX_PATTERN)) {
+                    fArray = ArrayUtil.parseFloat(text.split(delimiter));
+                }
+            } else {
+                fArray = new Float[1];
+                if (text.matches(RegexUtil.FLOAT_REGEX_PATTERN)) {
+                    fArray[0] = Float.parseFloat(text);
+                }
             }
         }
         return fArray;
@@ -327,17 +337,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.DOUBLE_LIST_REGEX_PATTERN)) {
-                dArray = ArrayUtil.parseDouble(text.split(delimiter));
-            }
-        } else {
-            dArray = new Double[1];
-            if (text.matches(RegexUtil.DOUBLE_REGEX_PATTERN)) {
-                dArray[0] = Double.parseDouble(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.DOUBLE_LIST_REGEX_PATTERN)) {
+                    dArray = ArrayUtil.parseDouble(text.split(delimiter));
+                }
+            } else {
+                dArray = new Double[1];
+                if (text.matches(RegexUtil.DOUBLE_REGEX_PATTERN)) {
+                    dArray[0] = Double.parseDouble(text);
+                }
             }
         }
         return dArray;
@@ -366,17 +378,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.BOOLEAN_LIST_REGEX_PATTERN)) {
-                bArray = ArrayUtil.parseBoolean(text.split(delimiter));
-            }
-        } else {
-            bArray = new Boolean[1];
-            if (text.matches(RegexUtil.BOOLEAN_REGEX_PATTERN)) {
-                bArray[0] = Boolean.parseBoolean(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.BOOLEAN_LIST_REGEX_PATTERN)) {
+                    bArray = ArrayUtil.parseBoolean(text.split(delimiter));
+                }
+            } else {
+                bArray = new Boolean[1];
+                if (text.matches(RegexUtil.BOOLEAN_REGEX_PATTERN)) {
+                    bArray[0] = Boolean.parseBoolean(text);
+                }
             }
         }
         return bArray;
@@ -405,17 +419,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.CHARACTER_LIST_REGEX_PATTERN)) {
-                cArray = ArrayUtil.parseCharacter(text.split(delimiter));
-            }
-        } else {
-            cArray = new Character[1];
-            if (text.matches(RegexUtil.CHARACTER_REGEX_PATTERN)) {
-                cArray[0] = text.charAt(0);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.CHARACTER_LIST_REGEX_PATTERN)) {
+                    cArray = ArrayUtil.parseCharacter(text.split(delimiter));
+                }
+            } else {
+                cArray = new Character[1];
+                if (text.matches(RegexUtil.CHARACTER_REGEX_PATTERN)) {
+                    cArray[0] = text.charAt(0);
+                }
             }
         }
         return cArray;
@@ -431,7 +447,7 @@ public class ArrayUtil {
             String s = "";
             for (int i = 0; i < sArray.length; i++) {
                 s = sArray[i];
-                if (s != null && s.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
+                if (s != null && s.matches(RegexUtil.LONG_REGEX_PATTERN)) {
                     biArray[i] = new BigInteger(s);
                 }
             }
@@ -444,17 +460,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.INTEGER_LIST_REGEX_PATTERN)) {
-                biArray = ArrayUtil.parseBigInt(text.split(delimiter));
-            }
-        } else {
-            biArray = new BigInteger[1];
-            if (text.matches(RegexUtil.INTEGER_REGEX_PATTERN)) {
-                biArray[0] = new BigInteger(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.LONG_LIST_REGEX_PATTERN)) {
+                    biArray = ArrayUtil.parseBigInt(text.split(delimiter));
+                }
+            } else {
+                biArray = new BigInteger[1];
+                if (text.matches(RegexUtil.LONG_REGEX_PATTERN)) {
+                    biArray[0] = new BigInteger(text);
+                }
             }
         }
         return biArray;
@@ -483,17 +501,19 @@ public class ArrayUtil {
         text = text == null ? "" : text.trim();
         text = text.endsWith(",") ? text.substring(0, text.length() - 1) : text;
         delimiter = delimiter == null ? "," : delimiter;
-        if (text.contains(",")) {
-            text = text.replace(", ", ",");
-            text = text.replace(" , ", ",");
-            text = text.replace(" ,", ",");
-            if (text.matches(RegexUtil.DOUBLE_LIST_REGEX_PATTERN)) {
-                bdArray = ArrayUtil.parseBigDecimal(text.split(delimiter));
-            }
-        } else {
-            bdArray = new BigDecimal[1];
-            if (text.matches(RegexUtil.DOUBLE_REGEX_PATTERN)) {
-                bdArray[0] = new BigDecimal(text);
+        if (!text.isEmpty()) {
+            if (text.contains(",")) {
+                text = text.replace(", ", ",");
+                text = text.replace(" , ", ",");
+                text = text.replace(" ,", ",");
+                if (text.matches(RegexUtil.DOUBLE_LIST_REGEX_PATTERN)) {
+                    bdArray = ArrayUtil.parseBigDecimal(text.split(delimiter));
+                }
+            } else {
+                bdArray = new BigDecimal[1];
+                if (text.matches(RegexUtil.DOUBLE_REGEX_PATTERN)) {
+                    bdArray[0] = new BigDecimal(text);
+                }
             }
         }
         return bdArray;
@@ -525,5 +545,6 @@ public class ArrayUtil {
     @SafeVarargs
     public static <T> T[] of (T... elements) {
         return elements;
-    }    
+    }
+    
 }
