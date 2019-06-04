@@ -1,9 +1,13 @@
 package br.org.jext;
 
+import java.util.Date;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DateUtilTest {
    
+   @Ignore
    @Test
    public void test() {
       System.out.println(DateUtil.datetime("19/11/1982 16:55:25"));
@@ -35,6 +39,14 @@ public class DateUtilTest {
           System.out.println(date[0]);
           System.out.println(date[1]);
       });
+   }
+   
+   @Test
+   public void testOne() {
+       java.util.List<Date[]> datas = DateUtil.getFirstAndLastDatesOfInterval(DateUtil.parse("01/2019", "MM/yyyy"), DateUtil.parse("05/2019", "MM/yyyy"));
+       System.out.println(StringUtil.toString(datas));
+       
+       System.out.println(StringUtil.toString(DateUtil.getDateArrayBetween(DateUtil.parse("01/2019", "MM/yyyy"), DateUtil.parse("05/2019", "MM/yyyy"))));
    }
    
 }

@@ -454,7 +454,7 @@ public final class Dates {
     }
     
     public static String now(String format) {
-        return DateUtil.currdate(format);
+        return Dates.currdate(format);
     }
     
     public static Date today() {
@@ -1898,18 +1898,24 @@ public final class Dates {
             datas.add(dataInicio);
             // 3.2.1.6 Gerar as datas localizadas entre a data de início e de término.
             while (ano <= anoTermino) {
-                if (ano == anoInicio) {
-                    mes = mesInicio + 1;
-                    dia = 1;
-                    ultimoMes = 11;
-                } else if (ano == anoTermino) {
-                    mes = 0;
-                    dia = 1;
-                    ultimoMes = mesTermino - 1;
+                if (anoInicio != anoTermino) {
+                    if (ano == anoInicio) {
+                        mes = mesInicio + 1;
+                        dia = 1;
+                        ultimoMes = 11;
+                    } else if (ano == anoTermino) {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = mesTermino - 1;
+                    } else {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = 11;
+                    }
                 } else {
-                    mes = 0;
                     dia = 1;
-                    ultimoMes = 11;
+                    mes = mesInicio + 1;
+                    ultimoMes = mesTermino - 1;
                 }
                 while (mes <= ultimoMes) {
                     calendario.set(ano, mes, dia, 0, 0, 0);
@@ -1956,8 +1962,8 @@ public final class Dates {
         dataTermino = dataTermino == null ? dataInicio : dataTermino;
         if (dataInicio.equals(dataTermino)) {
             array = new Date[2];
-            array[0] = DateUtil.firstDateOfMonth(dataInicio);
-            array[1] = DateUtil.lastDateOfMonth(dataInicio);
+            array[0] = Dates.firstDateOfMonth(dataInicio);
+            array[1] = Dates.lastDateOfMonth(dataInicio);
             datas.add(array);
         } else if (dataInicio.before(dataTermino)) {
             Calendar calendario = Calendar.getInstance();
@@ -1973,8 +1979,8 @@ public final class Dates {
             int ultimoMes = 0;
             Date data;
             array = new Date[2];
-            array[0] = DateUtil.firstDateOfMonth(dataInicio);
-            array[1] = DateUtil.lastDateOfMonth(dataInicio);
+            array[0] = Dates.firstDateOfMonth(dataInicio);
+            array[1] = Dates.lastDateOfMonth(dataInicio);
             datas.add(array);
             while (ano <= anoTermino) {
                 if (anoInicio != anoTermino) {
@@ -2000,16 +2006,16 @@ public final class Dates {
                     calendario.set(ano, mes, dia, 0, 0, 0);
                     data = calendario.getTime();
                     array = new Date[2];
-                    array[0] = DateUtil.firstDateOfMonth(data);
-                    array[1] = DateUtil.lastDateOfMonth(data);
+                    array[0] = Dates.firstDateOfMonth(data);
+                    array[1] = Dates.lastDateOfMonth(data);
                     datas.add(array);
                     mes++;
                 }
                 ano++;
             }
             array = new Date[2];
-            array[0] = DateUtil.firstDateOfMonth(dataTermino);
-            array[1] = DateUtil.lastDateOfMonth(dataTermino);
+            array[0] = Dates.firstDateOfMonth(dataTermino);
+            array[1] = Dates.lastDateOfMonth(dataTermino);
             datas.add(array);
         } else {
             
@@ -2033,8 +2039,8 @@ public final class Dates {
         List<Date[]> list = new ArrayList<>();
         if (date != null) {
             Date[] array = new Date[2];
-            array[0] = DateUtil.firstDateOfMonth(date);
-            array[1] = DateUtil.lastDateOfMonth(date);
+            array[0] = Dates.firstDateOfMonth(date);
+            array[1] = Dates.lastDateOfMonth(date);
             list.add(array);
         }
         return list;
@@ -2059,8 +2065,8 @@ public final class Dates {
         end = end == null ? start : end;
         if (start.equals(end)) {
             dateArray = new Date[2];
-            dateArray[0] = DateUtil.firstDateOfMonth(start);
-            dateArray[1] = DateUtil.lastDateOfMonth(start);
+            dateArray[0] = Dates.firstDateOfMonth(start);
+            dateArray[1] = Dates.lastDateOfMonth(start);
             dates.add(dateArray);
         } else if (start.before(end)) {
             Calendar calendar = Calendar.getInstance();
@@ -2076,8 +2082,8 @@ public final class Dates {
             int lastMonth;
             Date date;
             dateArray = new Date[2];
-            dateArray[0] = DateUtil.firstDateOfMonth(start);
-            dateArray[1] = DateUtil.lastDateOfMonth(start);
+            dateArray[0] = Dates.firstDateOfMonth(start);
+            dateArray[1] = Dates.lastDateOfMonth(start);
             dates.add(dateArray);
             while (year <= endYear) {
                 if (startYear != endYear) {
@@ -2103,16 +2109,16 @@ public final class Dates {
                     calendar.set(year, month, day, 0, 0, 0);
                     date = calendar.getTime();
                     dateArray = new Date[2];
-                    dateArray[0] = DateUtil.firstDateOfMonth(date);
-                    dateArray[1] = DateUtil.lastDateOfMonth(date);
+                    dateArray[0] = Dates.firstDateOfMonth(date);
+                    dateArray[1] = Dates.lastDateOfMonth(date);
                     dates.add(dateArray);
                     month++;
                 }
                 year++;
             }
             dateArray = new Date[2];
-            dateArray[0] = DateUtil.firstDateOfMonth(end);
-            dateArray[1] = DateUtil.lastDateOfMonth(end);
+            dateArray[0] = Dates.firstDateOfMonth(end);
+            dateArray[1] = Dates.lastDateOfMonth(end);
             dates.add(dateArray);
         } else {
             

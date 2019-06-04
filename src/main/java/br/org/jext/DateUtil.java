@@ -1898,18 +1898,24 @@ public final class DateUtil {
             datas.add(dataInicio);
             // 3.2.1.6 Gerar as datas localizadas entre a data de início e de término.
             while (ano <= anoTermino) {
-                if (ano == anoInicio) {
-                    mes = mesInicio + 1;
-                    dia = 1;
-                    ultimoMes = 11;
-                } else if (ano == anoTermino) {
-                    mes = 0;
-                    dia = 1;
-                    ultimoMes = mesTermino - 1;
+                if (anoInicio != anoTermino) {
+                    if (ano == anoInicio) {
+                        mes = mesInicio + 1;
+                        dia = 1;
+                        ultimoMes = 11;
+                    } else if (ano == anoTermino) {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = mesTermino - 1;
+                    } else {
+                        mes = 0;
+                        dia = 1;
+                        ultimoMes = 11;
+                    }
                 } else {
-                    mes = 0;
                     dia = 1;
-                    ultimoMes = 11;
+                    mes = mesInicio + 1;
+                    ultimoMes = mesTermino - 1;
                 }
                 while (mes <= ultimoMes) {
                     calendario.set(ano, mes, dia, 0, 0, 0);
