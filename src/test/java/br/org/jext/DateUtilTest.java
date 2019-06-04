@@ -45,7 +45,6 @@ public class DateUtilTest {
    public void testOne() {
        java.util.List<Date[]> datas = DateUtil.getFirstAndLastDatesOfInterval(DateUtil.parse("01/2019", "MM/yyyy"), DateUtil.parse("05/2019", "MM/yyyy"));
        System.out.println(StringUtil.toString(datas));
-       
        System.out.println(StringUtil.toString(DateUtil.getDateArrayBetween(DateUtil.parse("01/2019", "MM/yyyy"), DateUtil.parse("05/2019", "MM/yyyy"))));
    }
    

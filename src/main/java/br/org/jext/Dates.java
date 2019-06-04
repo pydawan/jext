@@ -1955,6 +1955,33 @@ public final class Dates {
         return getDateArrayBetween(start, end);
     }
     
+    public static List<Date> obterListaDeDatasEntre(String dataInicio, String dataTermino, String formato) {
+        dataInicio = dataInicio == null ? "" : dataInicio;
+        dataTermino = dataTermino == null ? "" : dataTermino;
+        formato = formato == null ? "" : formato;
+        return Dates.obterListaDeDatasEntre(Dates.parse(dataInicio, formato), Dates.parse(dataTermino, formato));
+    }
+    
+    public static Date[] obterDatasEntre(String dataInicio, String dataTermino, String formato) {
+        return Dates.obterListaDeDatasEntre(Dates.parse(dataInicio, formato), Dates.parse(dataTermino, formato)).toArray(new Date[0]);
+    }
+    
+    public static List<Date> getDateListBetween(String start, String end, String pattern) {
+        return Dates.obterListaDeDatasEntre(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static Date[] getDateArrayBetween(String start, String end, String pattern) {
+        return Dates.obterDatasEntre(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date> dateListBetween(String start, String end, String pattern) {
+        return Dates.getDateListBetween(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static Date[] dateArrayBetween(String start, String end, String pattern) {
+        return Dates.getDateArrayBetween(start, end, pattern);
+    }
+    
     public static List<Date[]> obterDatasDoIntervalo(Date dataInicio, Date dataTermino) {
         List<Date[]> datas = new ArrayList<>();
         Date[] array = null;
@@ -2136,6 +2163,46 @@ public final class Dates {
     
     public static List<Date[]> firstAndLastDatesBetween(Date start, Date end) {
         return getFirstAndLastDatesBetween(start, end);
+    }
+    
+    public static List<Date[]> obterDatasDoIntervalo(String dataInicio, String dataTermino, String formato) {
+        return Dates.obterDatasDoIntervalo(Dates.parse(dataInicio, formato), Dates.parse(dataTermino, formato));
+    }
+    
+    public static List<Date[]> datasDoIntervalo(String dataInicio, String dataTermino, String formato) {
+        return Dates.obterDatasDoIntervalo(Dates.parse(dataInicio, formato), Dates.parse(dataTermino, formato));
+    }
+    
+    public static List<Date[]> getDatesOfInterval(String start, String end, String pattern) {
+        return Dates.getDatesOfInterval(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date[]> datesOfInterval(String start, String end, String pattern) {
+        return Dates.datesOfInterval(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date[]> getFirstAndLastDateOf(String date, String pattern) {
+        return Dates.getFirstAndLastDateOf(Dates.parse(date, pattern));
+    }
+    
+    public static List<Date[]> firstAndLastDateOf(String date, String pattern) {
+        return Dates.firstAndLastDateOf(Dates.parse(date, pattern));
+    }
+    
+    public static List<Date[]> getFirstAndLastDatesOfInterval(String start, String end, String pattern) {
+        return Dates.getFirstAndLastDatesOfInterval(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date[]> firstAndLastDatesOfInterval(String start, String end, String pattern) {
+        return Dates.firstAndLastDatesOfInterval(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date[]> getFirstAndLastDatesBetween(String start, String end, String pattern) {
+        return Dates.getFirstAndLastDatesBetween(Dates.parse(start, pattern), Dates.parse(end, pattern));
+    }
+    
+    public static List<Date[]> firstAndLastDatesBetween(String start, String end, String pattern) {
+        return Dates.firstAndLastDatesBetween(Dates.parse(start, pattern), Dates.parse(end, pattern));
     }
     
 }
