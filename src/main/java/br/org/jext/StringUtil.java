@@ -29,6 +29,7 @@ import br.org.verify.Verify;
  * @version v1.0.0 01/09/2017
  * @version v1.0.1 01/02/2018
  * @version v1.0.2 07/04/2018
+ * @version v1.0.3 04/06/2019
  * @since v1.0.0
  */
 public final class StringUtil {
@@ -619,7 +620,7 @@ public final class StringUtil {
          int length = ((Object[]) array).length;
          String[] strings = new String[length];
          for (int i = 0; i < length; i++) {
-            strings[i] = ((Object[]) array)[i].toString();
+            strings[i] = StringUtil.toString(((Object[]) array)[i]);
          }
          arrayString = String.format("{%s}", String.join(", ", strings));
       }
@@ -630,11 +631,11 @@ public final class StringUtil {
    public static String listToString(Object object) {
       List<Object> list = null;
       String listString = "[]";
-      if (isNotEmptyOrNull(list) && isList(object)) {
+      if (isNotEmptyOrNull(object) && isList(object)) {
          list = (List<Object>) object;
          String string = arrayToString(list.toArray());
-         string = string.replace("{", "[");
-         string = string.replace("}", "]");
+         string = "[" + string + "]";
+         listString = string;
       }
       return listString;
    }
@@ -660,12 +661,12 @@ public final class StringUtil {
       String string = "";
       if (isNotEmptyOrNull(object) && isArray(object)) {
          string = arrayToString(object);
-      }
-      if (isNotEmptyOrNull(object) && isList(object)) {
+      } else if (isNotEmptyOrNull(object) && isList(object)) {
          string = listToString(object);
-      }
-      if (isNotEmptyOrNull(object) && isMap(object)) {
+      } else if (isNotEmptyOrNull(object) && isMap(object)) {
          string = mapToString(object);
+      } else {
+         string = object == null ? null : object.toString();
       }
       return string;
    }
@@ -1090,7 +1091,7 @@ public final class StringUtil {
    
    public static Boolean[] parseBooleanArray(String string, String delimiter) {
        Boolean[] booleans = null;
-       String regex = RegexUtil.BOOLEAN_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.BOOLEAN_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            booleans = ArrayUtil.parseBoolean(strings);
@@ -1113,7 +1114,7 @@ public final class StringUtil {
    
    public static Character[] parseCharacterArray(String string, String delimiter) {
        Character[] characters = null;
-       String regex = RegexUtil.CHARACTER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.CHARACTER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            characters = ArrayUtil.parseCharacter(strings);
@@ -1136,7 +1137,7 @@ public final class StringUtil {
    
    public static Byte[] parseByteArray(String string, String delimiter) {
        Byte[] bytes = null;
-       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            bytes = ArrayUtil.parseByte(strings);
@@ -1159,7 +1160,7 @@ public final class StringUtil {
    
    public static Short[] parseShortArray(String string, String delimiter) {
        Short[] shorts = null;
-       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            shorts = ArrayUtil.parseShort(strings);
@@ -1182,7 +1183,7 @@ public final class StringUtil {
    
    public static Integer[] parseIntArray(String string, String delimiter) {
        Integer[] integers = null;
-       String regex = RegexUtil.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.INTEGER_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            integers = ArrayUtil.parseInt(strings);
@@ -1205,7 +1206,7 @@ public final class StringUtil {
    
    public static Long[] parseLongArray(String string, String delimiter) {
        Long[] longs = null;
-       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            longs = ArrayUtil.parseLong(strings);
@@ -1228,7 +1229,7 @@ public final class StringUtil {
    
    public static Float[] parseFloatArray(String string, String delimiter) {
        Float[] floats = null;
-       String regex = RegexUtil.FLOAT_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.FLOAT_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            floats = ArrayUtil.parseFloat(strings);
@@ -1251,7 +1252,7 @@ public final class StringUtil {
    
    public static Double[] parseDoubleArray(String string, String delimiter) {
        Double[] doubles = null;
-       String regex = RegexUtil.DOUBLE_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.DOUBLE_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            doubles = ArrayUtil.parseDouble(strings);
@@ -1274,7 +1275,7 @@ public final class StringUtil {
    
    public static BigInteger[] parseBigIntArray(String string, String delimiter) {
        BigInteger[] bigIntegers = null;
-       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            bigIntegers = ArrayUtil.parseBigInt(strings);
@@ -1297,7 +1298,7 @@ public final class StringUtil {
    
    public static BigDecimal[] parseBigDecimalArray(String string, String delimiter) {
        BigDecimal[] bigDecimals = null;
-       String regex = RegexUtil.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
+       String regex = Regex.LONG_LIST_REGEX_PATTERN.replaceAll(",", delimiter);
        if (isNotNullOrEmpty(string) && string.matches(regex)) {
            String[] strings = string.split(delimiter);
            bigDecimals = ArrayUtil.parseBigDecimal(strings);

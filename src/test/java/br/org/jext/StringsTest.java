@@ -1,5 +1,7 @@
 package br.org.jext;
 
+import static java.util.Arrays.asList;
+
 import org.junit.Test;
 
 /**
@@ -26,6 +28,7 @@ public class StringsTest {
       System.out.println(Strings.getOrDefault(null, "vazio"));
       System.out.println(Strings.getOrEmpty(null));
       System.out.println(Strings.compile(Template.of("Nome: $nome").put("nome", "Thiago")));
+      System.out.println(Strings.toString(asList("Thiago", "Alexandre", "Martins", "Monteiro")));
    }
    
 }
