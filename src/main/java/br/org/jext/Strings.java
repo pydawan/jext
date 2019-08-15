@@ -5,16 +5,26 @@ import static br.org.verify.Verify.isList;
 import static br.org.verify.Verify.isMap;
 import static br.org.verify.Verify.isNotEmptyOrNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -30,9 +40,10 @@ import br.org.verify.Verify;
  * @version v1.0.1 01/02/2018
  * @version v1.0.2 07/04/2018
  * @version v1.0.3 04/06/2019
+ * @version v1.0.4 14/08/2019
  * @since v1.0.0
  */
-public final class Strings {
+public class Strings {
    
    private static final List<String> EMPTY_STRINGS_LIST = Collections.unmodifiableList(new ArrayList<>(0));
    
@@ -1521,6 +1532,121 @@ public final class Strings {
         str = str.replace("Ñ", "N");
         str = str.replace("ñ", "n");
         return str;
+    }
+    
+    public static double convertToDouble(String valor) {
+        if (valor.matches("(?i).*.,.*")) {
+            return (Double.valueOf(valor.replaceAll("\\.", "").replaceAll(",", "")) / 100);
+        }
+        return Double.valueOf(valor);
+    }
+    
+    public static double toDouble(String valor) {
+        return convertToDouble(valor);
+    }
+    
+    public static BigDecimal toBigDecimal(String valor) {
+        valor = valor == null ? "0.00" : valor.trim();
+        return new BigDecimal( toDouble(valor) );
+    }
+    
+    public static String getHash(String str, String algoritmo) {
+        try {
+            MessageDigest md = MessageDigest.getInstance(algoritmo);
+            BigInteger hash = new BigInteger(1, md.digest(str.getBytes()));
+            String crypto = hash.toString(Character.MAX_RADIX);
+            if (crypto.length() % 2 != 0) {
+                crypto = "0" + crypto;
+            }
+            return crypto;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public static String toAscii(String str) {
+        if (str == null) {
+            return "";
+        }
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        str = str.replaceAll("[^\\p{ASCII}]", "");
+        return str;
+    }
+    
+    public static String toInputStream(InputStream is) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        br.close();
+        return sb.toString();
+    }
+    
+    public static String encodeBase64(String str) {
+        Encoder base64 = Base64.getEncoder();
+        String encodedString = new String(base64.encode(str.getBytes()));
+        return encodedString;
+    }
+    
+    public static String decodeBase64(String str) {
+        Decoder base64 = Base64.getDecoder();
+        String decodedString = new String(base64.decode(str.getBytes()));
+        return decodedString;
+    }
+    
+    public static String encodeBase64Url(String str) {
+        String encodedUrl = Base64.getUrlEncoder().encodeToString(str.getBytes());
+        return encodedUrl;
+    }
+    
+    public static String decodeBase64Url(String str) {
+        String decodedUrl = new String(Base64.getDecoder().decode(str.getBytes()));
+        return decodedUrl;
+    }
+    
+    public static String encodeMime(String str) {
+        String mimeEncoded = Base64.getMimeEncoder().encodeToString(str.getBytes());
+        return mimeEncoded;
+    }
+    
+    public static String decodeMime(String str) {
+        String mimeDecoded = new String(Base64.getMimeDecoder().decode(str.getBytes()));
+        return mimeDecoded;
+    }
+    
+    public static String formatNumber(BigDecimal valor, Locale locale) throws Exception {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+        return numberFormat.format(valor);
+    }
+    
+    public static String formatNumber(BigDecimal valor) throws Exception {
+        return formatNumber(valor, Locale.getDefault());
+    }
+    
+    public static String formatNumber(Number valor, Locale locale) throws Exception {
+        return formatNumber(new BigDecimal(valor.doubleValue()), locale); 
+    }
+    
+    public static String formatNumber(Number valor) throws Exception {
+        return formatNumber(new BigDecimal(valor.doubleValue())); 
+    }
+    
+    public static String singleQuote(String string) {
+        return string != null ? String.format("'%s'", string) : "";
+    }
+    
+    public static String singleQuote(String... strings) {
+        String result = "";
+        if (strings != null && strings.length > 0) {
+            String[] aux = new String[strings.length];
+            for (int i = 0; i < strings.length; i++) {
+                aux[i] = Strings.singleQuote( (String) strings[i]);
+            }
+            result = ArrayUtil.join(", ", aux);
+        }
+        return result;
     }
    
 }
