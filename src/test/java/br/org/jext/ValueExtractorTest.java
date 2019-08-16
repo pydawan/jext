@@ -48,14 +48,17 @@ public class ValueExtractorTest {
         Pessoa p1 = new Pessoa();
         p1.setId(1);
         p1.setNome("Thiago");
+        p1.setEmail("thicmp@gmail.com");
         
         Pessoa p2 = new Pessoa();
         p2.setId(2);
         p2.setNome("Polyany");
+        p2.setEmail("polyany.rl@gmail.com");
         
         Pessoa p3 = new Pessoa();
         p3.setId(3);
         p3.setNome("Lorenzo");
+        p3.setEmail("lorenzo.rlm@gmail.com");
         
         Pessoa[] pessoas = new Pessoa[3];
         pessoas[0] = p1;
@@ -77,21 +80,17 @@ public class ValueExtractorTest {
         }
         System.out.println();
         
-        Object[] values = (Object[]) ValueExtractor.extract("id", "nome").from(pessoas).toArray(Integer.class, String.class);
+        Object[] values = (Object[]) ValueExtractor.extract("id", "nome").from(pessoas).toArray();
         
         System.out.println("Valores: ");
-        Integer id = null;
-        String nome = null;
         for (Object value : values) {
-            id = (Integer) ( (Object[]) value)[0];
-            nome = (String) ( (Object[]) value)[1];
-            System.out.printf("[id = %s, nome = %s]", id, nome);
+            System.out.printf("[id = %s, nome = %s]", ValueExtractor.on(value).field("id"), ValueExtractor.field("nome", value));
         }
         System.out.println();
+//        ValueExtractor.format("[id = ${id}, nome = ${nome}, email = ${email}]", values);
         
-        Integer[] _ids = ValueExtractor.extract("id").from(pessoas).toArray();
-        System.out.println(_ids);
-        
+        String text = "[id = ${id}, nome = ${nome}, email = ${email}]\n";
+        System.out.println(ValueExtractor.format(text, values));
     }
 
 }
