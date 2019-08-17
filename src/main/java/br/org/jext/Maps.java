@@ -1,5 +1,6 @@
 package br.org.jext;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,24 @@ public final class Maps<K, V> {
    
    public static final Map<Object, Object> NULL_MAP = null;
    public static final Map<Object, Object> EMPTY_MAP = Collections.unmodifiableMap(new HashMap<>(0));
+   
+   public static MapItem item(Object key, Object value) {
+       if (Verify.notContainsEmptyOrNull(key, value)) {
+          return new MapItem(key, value);
+       } else {
+          throw new IllegalArgumentException("É necessário informar a chave o valor para criar o item no mapa!");
+       }
+    }
+    
+    public static MapItems items(MapItem... item) {
+       if (Verify.isNotEmptyOrNull((Object[]) item)) {
+          MapItems items = new MapItems();
+          items.addAll(Arrays.asList(item));
+          return items;
+       } else {
+          throw new IllegalArgumentException("É necessário informar os itens a serem adicionados no mapa!");
+       }
+    }
    
    public static <K, V> Map<K, V> of() {
       return new HashMap<K, V>();
