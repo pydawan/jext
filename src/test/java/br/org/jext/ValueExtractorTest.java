@@ -1,5 +1,8 @@
 package br.org.jext;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 
 
@@ -80,17 +83,18 @@ public class ValueExtractorTest {
         }
         System.out.println();
         
-        Object[] values = (Object[]) ValueExtractor.extract("id", "nome").from(pessoas).toArray();
-        
+        Object[] values = ValueExtractor.extract("id", "nome").from(pessoas).toArray().getArray();
         System.out.println("Valores: ");
         for (Object value : values) {
-            System.out.printf("[id = %s, nome = %s]", ValueExtractor.on(value).field("id"), ValueExtractor.field("nome", value));
+            System.out.printf("[id = %s, nome = %s]\n", ValueExtractor.on(value).field("id"), ValueExtractor.field("nome", value));
         }
-        System.out.println();
-//        ValueExtractor.format("[id = ${id}, nome = ${nome}, email = ${email}]", values);
         
-        String text = "[id = ${id}, nome = ${nome}, email = ${email}]\n";
-        System.out.println(ValueExtractor.format(text, values));
+        ValueExtractor.extract("id", "nome").from(pessoas).toArray().print("<id = ${id}, nome = ${nome}>\n");
+        List<Map<String, Object>> mapas = ValueExtractor.extract("id", "nome").from(pessoas).toMap().getMap();
+        for (Map<String, Object> mapa : mapas) {
+            System.out.println(mapa);
+        }
+        ValueExtractor.extract("id", "nome").from(pessoas).toMap().getArray();
     }
 
 }
