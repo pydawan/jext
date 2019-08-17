@@ -3,6 +3,7 @@ package br.org.jext;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -44,10 +45,11 @@ class Pessoa {
 }
 
 public class ValueExtractorTest {
-
-    @Test
-    public void test() {
-        
+    
+    private Pessoa[] pessoas;
+    
+    @Before
+    public void setup() {
         Pessoa p1 = new Pessoa();
         p1.setId(1);
         p1.setNome("Thiago");
@@ -63,10 +65,14 @@ public class ValueExtractorTest {
         p3.setNome("Lorenzo");
         p3.setEmail("lorenzo.rlm@gmail.com");
         
-        Pessoa[] pessoas = new Pessoa[3];
+        pessoas = new Pessoa[3];
         pessoas[0] = p1;
         pessoas[1] = p2;
         pessoas[2] = p3;
+    }
+
+    @Test
+    public void testValidExtraction() {
         
         Integer[] ids = ValueExtractor.extract("id").from(pessoas).toArray(Integer.class);
         
@@ -94,6 +100,10 @@ public class ValueExtractorTest {
         for (Map<String, Object> mapa : mapas) {
             System.out.println(mapa);
         }
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidExtraction() {
         ValueExtractor.extract("id", "nome").from(pessoas).toMap().getArray();
     }
 
