@@ -23,9 +23,9 @@ public class ShortcutTest {
       $.printf("Ano atual: %s\n", $.year());
       $.printf("Data atual: %s\n", $.fulldate());
       $.println(
-         Map.items(
-            Map.item("nome", "Thiago"), 
-            Map.item("idade", 35)
+         Maps.items(
+            Maps.item("nome", "Thiago"), 
+            Maps.item("idade", 35)
          )
       );
       $.println(

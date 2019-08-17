@@ -16,7 +16,7 @@ public class ListTest {
    
    @Test
    public void test() {
-      Assert.assertTrue(List.emptyOrNull(List.EMPTY_LIST));
+      Assert.assertTrue(Lists.emptyOrNull(Lists.EMPTY_LIST));
       for (String string : Strings.array("?", 5)) {
          System.out.println(string);
       }

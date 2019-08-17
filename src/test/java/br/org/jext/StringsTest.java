@@ -14,7 +14,7 @@ public class StringsTest {
    public void test() {
       System.out.println(Strings.translate("Thiago Alexandre Martins Monteiro", "thiagowtd", "123xyzáúó"));
       String text = "Translation is the communication of the meaning of a source-language text by means of an equivalent target-language text.[1] The English language draws a terminological distinction (not all languages do) between translating (a written text) and interpreting (oral or sign-language communication between users of different languages); under this distinction, translation can begin only after the appearance of writing within a language community.\n";
-      System.out.println(Strings.translate(text, List.of("Translation"), Lists.of("tradução")));
+      System.out.println(Strings.translate(text, Lists.of("Translation"), Lists.of("tradução")));
       text = "Thiago Alexandre\nMartins Monteiro";
       System.out.println(Strings.lines(text));
       System.out.println(Strings.count("Thiago", "Thiago Alexandre Martins Monteiro da Silva Thiago thiago"));
