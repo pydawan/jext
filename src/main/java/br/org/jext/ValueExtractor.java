@@ -235,14 +235,14 @@ public class ValueExtractor {
         
         public Object[] getArray() throws IllegalStateException {
             if (this.extractionType.equals(MAP_VALUE_EXTRACTION)) {
-                throw new IllegalArgumentException("Estado inválido: não é possível obter um array com uma extração que não produziu um array!");
+                throw new IllegalStateException("Estado inválido: não é possível obter um array com uma extração que não produziu um array!");
             }
             return this.array;
         }
         
-        public List<Map<String, Object>> getMap() throws IllegalArgumentException {
+        public List<Map<String, Object>> getMap() throws IllegalStateException {
             if (this.extractionType.equals(ARRAY_VALUE_EXTRACTION)) {
-                throw new IllegalArgumentException("Estado inválido: não é possível obter um mapa com uma extração que não produziu um mapa!");
+                throw new IllegalStateException("Estado inválido: não é possível obter um mapa com uma extração que não produziu um mapa!");
             }
             return this.maps;
         }
