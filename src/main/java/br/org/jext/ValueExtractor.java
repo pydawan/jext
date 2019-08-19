@@ -165,7 +165,6 @@ public class ValueExtractor {
         
         public String format(String formatter) throws IllegalArgumentException {
             validateIfNullOrEmpty("formatter", formatter);
-            validateIfNullOrEmpty("array", array);
             String regex = "\\$\\{\\w+\\}";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(formatter);
@@ -175,6 +174,7 @@ public class ValueExtractor {
             String field = "";
             Object value = null;
             if (this.extractionType.equals(ARRAY_VALUE_EXTRACTION)) {
+                validateIfNullOrEmpty("array", array);
                 Integer index = null;
                 for (Object object : this.array) {
                     text = new String(formatter);
@@ -200,6 +200,7 @@ public class ValueExtractor {
                     sb.append(text);
                 }
             } else if (this.extractionType.equals(MAP_VALUE_EXTRACTION)) {
+                validateIfNullOrEmpty("array", maps);
                 for (Map<String, Object> map : this.maps) {
                     text = new String(formatter);
                     placeholder = "";
@@ -266,20 +267,20 @@ public class ValueExtractor {
         if (object == null) {
             exceptionMessage = String.format("Argumento inválido: %s não existe (%s == null)!", name, name);
         }
-        if (object.getClass().isArray()) {
+        if (Array.class.isAssignableFrom(object.getClass())) {
             if (Array.getLength(object) == 0) {
                 exceptionMessage = String.format(
                     "Argumento inválido: %s não pode estar vazio (%s.length == 0)!", name, name
                 );
             }
         }
-        if (object.getClass().isAssignableFrom(Collection.class)) {
+        if (Collection.class.isAssignableFrom(object.getClass())) {
             Collection<?> collection = (Collection<?>) object;
             if (collection.isEmpty()) {
                 exceptionMessage = String.format("Argumento inválido: %s não pode estar vazio ( %s.isEmpty() )!", name, name);
             }
         }
-        if (object.getClass().isAssignableFrom(String.class)) {
+        if (String.class.isAssignableFrom(object.getClass())) {
             String string = (String) object;
             if (string.isEmpty()) {
                 exceptionMessage = String.format("Argumento inválido: %s não pode estar vazio ( %s.isEmpty() )!", name, name);
